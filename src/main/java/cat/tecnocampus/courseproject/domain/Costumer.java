@@ -4,7 +4,7 @@ import cat.tecnocampus.courseproject.application.dtos.OrderDTO;
 
 import java.util.UUID;
 
-public class User {
+public class Costumer {
 
     private String id;
     private String name;
@@ -13,7 +13,7 @@ public class User {
     private String password;
     public Role role;
 
-    public User(String name, String secondName, String email,String password, Role role ) {
+    public Costumer(String name, String secondName, String email,String password, Role role ) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
         this.secondName = secondName;
@@ -22,7 +22,7 @@ public class User {
         this.role=role;
     }
 
-    public User() {
+    public Costumer() {
     }
     
     public Role getRole() {
