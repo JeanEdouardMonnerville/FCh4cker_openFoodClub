@@ -1,13 +1,18 @@
 package cat.tecnocampus.courseproject.application;
 
-
-import cat.tecnocampus.courseproject.application.dtos.CostumerDTO;
+import cat.tecnocampus.courseproject.application.dtos.CustomerDTO;
 import cat.tecnocampus.courseproject.application.dtos.OrderDTO;
+import cat.tecnocampus.courseproject.application.dtos.OrderDetailDTO;
 import cat.tecnocampus.courseproject.application.dtos.ProductDTO;
+import cat.tecnocampus.courseproject.domain.Customer;
+import cat.tecnocampus.courseproject.domain.Order;
+import cat.tecnocampus.courseproject.domain.OrderDetail;
+import cat.tecnocampus.courseproject.domain.Product;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
-
-
 
 @Component
 public class Controller {
@@ -15,7 +20,11 @@ public class Controller {
     private HashMap<String, Product> products;
     private HashMap<String, Customer> customers;
     private HashMap<String, Order> orders;
-    private HashMap<String, OrderDetails> orderDetails;
+    private ArrayList<OrderDetail> orderDetails;
+
+    public void setOrderDetails(ArrayList<OrderDetail> orderDetails) {
+        this.orderDetails = orderDetails;
+    }
 
     public void setProducts(HashMap<String, Product> products) {
         this.products = products;
@@ -28,54 +37,54 @@ public class Controller {
     public void setOrders(HashMap<String, Order> orders) {
         this.orders = orders;
     }
-    
+
     //TBD: get a list of all products
     public List<ProductDTO> getAllProducts() {
         return products.values().stream().map(this::productToProductDTO).collect(Collectors.toList());
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public ProductDTO getOneProduct(String id) {
         if (products.containsKey(id)) {
-            return productToProductDTO(students.get(id));
+            return productToProductDTO(products.get(id));
         }
+        return null;
     }
 
     //TBD: get a list of all orders
     public List<OrderDTO> getAllOrders() {
         return orders.values().stream().map(this::orderToOrderDTO).collect(Collectors.toList());
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     //TBD: get the customer connected
-    public CostumerDTO getCustomerConnected() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    //public CustomerDTO getCustomerConnected() {
+    //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    //}
     //TBD: get the order more recent of a customer
-    public OrderDTO getCurrentOrderOfUser(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    // public OrderDTO getCurrentOrderOfUser(String id) {
+    //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    //}
+    
     //TBD: add a new order for a customer
-    public void addOrder(Order order, Costumer costumer) {
-        Order order = orderToOrderDTO(order);
-        
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void addOrder(OrderDTO orderdto) {
+        Order order = orderDTOToOrder(orderdto);
+        orders.put(order.getId_order(), order);
     }
 
     //TBD: add an order detail linking an order and a product with a quantity
-    public void addProductOnOrder(Order order, Product product, int quantity) {
-        OrderDetails orderDetail = new OrderDetails();
+    public void addProductOnOrder(OrderDTO order, ProductDTO product, int quantity) {
+        OrderDetailDTO orderDetail = new OrderDetailDTO();
+        
         orderDetail.setOrder(order);
         orderDetail.setProduct(product);
         orderDetail.setQuantity(quantity);
-        orderDetails.put(orderDetail);
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        orderDetails.add(orderDetailsDTOToorderDetails(orderDetail));
+        orders.get(order.getId_order()).setOrderDetail(orderDetails);
     }
 
-    /*****************************/
-
+    /**
+     * **************************
+     */
     private ProductDTO productToProductDTO(Product product) {
         ProductDTO productDTO = new ProductDTO();
         productDTO.setId_product(product.getId_product());
@@ -105,17 +114,70 @@ public class Controller {
     private OrderDTO orderToOrderDTO(Order order) {
         OrderDTO orderDTO = new OrderDTO();
         orderDTO.setId_order(order.getId_order());
-        orderDTO.setUser(order.getUser());
+        orderDTO.setUser(customerToCustomerDTO(order.getUser()));
         orderDTO.setOrder_date(order.getOrder_date());
-        orderDTO.setOrderDetails(order.getOrderDetails());
+
+        List<OrderDetailDTO> orderDetails = new ArrayList<>();
+        for (OrderDetail od : order.getOrderDetail()) {
+            orderDetails.add(orderDetailsToOrderDetailsDTO(od));
+        }
+        orderDTO.setOrderDetail(orderDetails);
         return orderDTO;
     }
 
-    private OrderDetailsDTO orderDetailsToOrderDetailsDTO(OrderDetails orderDetails) {
-        OrderDetailsDTO orderDetailsDTO = new OrderDetailsDTO();
-        orderDetailsDTO.setQuantity(orderDetails.getQuantity());
-        orderDetailsDTO.setOrder(orderDetails.getOrder());
-        orderDetailsDTO.setProduct(orderDetails.getProduct());
+    private Order orderDTOToOrder(OrderDTO orderdto) {
+        Order order = new Order();
+        
+        order.setId_order(orderdto.getId_order());
+        order.setUser(customerDTOToCustomer(orderdto.getUser()));
+        order.setOrder_date(orderdto.getOrder_date());
+
+        List<OrderDetail> orderDetails = new ArrayList<>();
+        for (OrderDetailDTO od : orderdto.getOrderDetail()) {
+            orderDetails.add(orderDetailsDTOToorderDetails(od));
+        }
+        order.setOrderDetail(orderDetails);
+        return order;
+    }
+
+    private OrderDetailDTO orderDetailsToOrderDetailsDTO(OrderDetail orderDetail) {
+        OrderDetailDTO orderDetailsDTO = new OrderDetailDTO();
+        orderDetailsDTO.setQuantity(orderDetail.getQuantity());
+        orderDetailsDTO.setOrder(orderToOrderDTO(orderDetail.getOrder()));
+        orderDetailsDTO.setProduct(productToProductDTO(orderDetail.getProduct()));
         return orderDetailsDTO;
+    }
+    private OrderDetail orderDetailsDTOToorderDetails(OrderDetailDTO orderDetailDto){
+       OrderDetail orderDetail = new OrderDetail();
+       
+        orderDetail.setQuantity(orderDetailDto.getQuantity());
+        orderDetail.setOrder(orderDTOToOrder(orderDetailDto.getOrder()));
+        orderDetail.setProduct(productDTOToProduct(orderDetailDto.getProduct()));
+        return orderDetail;
+    }
+
+    private CustomerDTO customerToCustomerDTO(Customer user) {
+        CustomerDTO customerdto = new CustomerDTO();
+
+        customerdto.setEmail(user.getEmail());
+        customerdto.setName(user.getName());
+        customerdto.setId(user.getId());
+        customerdto.setPassword(user.getPassword());
+        customerdto.setRole(user.getRole());
+        customerdto.setSecondName(user.getSecondName());
+
+        return customerdto;
+    }
+    private Customer customerDTOToCustomer(CustomerDTO customerdto){
+       Customer customer = new Customer();
+
+        customer.setEmail(customerdto.getEmail());
+        customer.setName(customerdto.getName());
+        customer.setId(customerdto.getId());
+        customer.setPassword(customerdto.getPassword());
+        customer.setRole(customerdto.getRole());
+        customer.setSecondName(customerdto.getSecondName());
+
+        return customer;
     }
 }
