@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.*;
 
 
 @Validated
-@RestController("/api")
+@RestController
 public class RESTController {
     Controller controller;
      
-    @GetMapping("/Products")
+    @GetMapping("/api/Products")
     public List<ProductDTO> getProducts(){
         return controller.getAllProducts();
     }
@@ -31,7 +31,7 @@ public class RESTController {
    // }
     
     
-     @PostMapping("/Order/")
+     @PostMapping("/api/Order/")
      public void addOrder(@RequestBody OrderDTO order ){
             controller.addOrder(order);
      }
@@ -40,7 +40,7 @@ public class RESTController {
      @Param quantity : indicate the quantity of the product added. If no value
      entered, we will considerate quantity=1
      */
-     @PostMapping("Order/Product/")
+     @PostMapping("/api/Order/Product/")
      public void addAProduct(@RequestBody OrderDTO order,
              @RequestBody ProductDTO product,
              @RequestBody int quantity){
