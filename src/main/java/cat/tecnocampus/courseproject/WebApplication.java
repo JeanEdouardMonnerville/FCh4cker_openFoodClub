@@ -1,26 +1,49 @@
 package cat.tecnocampus.courseproject;
 
-
+import cat.tecnocampus.courseproject.application.Controller;
+import cat.tecnocampus.courseproject.domain.Customer;
+import cat.tecnocampus.courseproject.domain.Product;
+import cat.tecnocampus.courseproject.domain.Role;
+import java.util.HashMap;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-
 @SpringBootApplication
-public class WebApplication {
+public class WebApplication implements CommandLineRunner {
+    private Controller controller;
 
     public static void main(String[] args) {
         SpringApplication.run(WebApplication.class, args);
     }
 
-    public HashMap<String, Product> products = new HashMap<String>();
+    @Autowired
+    public void setController(Controller controller) {
+        this.controller = controller;
+    }
+    
+    @Override
+    public void run(String... strings) throws Exception {
+        HashMap<String, Product> products = new HashMap<>();
+        HashMap<String, Customer> customers = new HashMap<>();
+        
+        Customer customer = new Customer("Pepe", "Gimenez", "pgimenez@tecnocampus.cat", "12345678", Role.USER);
+        customer.setId("1");
+        
+        Product product = new Product("peer", "fruit", 2, "kilo", "Juan", "0,42", "https://images.hermie.com/images/articles/large/plantenfiche-pyrus-communis-conference-conference-peer-15515.jpg");
+        Product product1 = new Product("tomato", "legume", 1, "kilo", "Juan", "0,21", "https://www.sementesfeltrin.com.br/_uploads/produtofoto/produtofoto_561_3673_orig.jpg");
+        product.setId_product("101");
+        product1.setId_product("102");
+        
+        products.put(product.getId_product(), product);
+        products.put(product1.getId_product(), product);
+        
+        customers.put(customer.getId(), customer);
+        
+        controller.setCustomers(customers);
+        controller.setProducts(products);
 
-    public HashMap<String, Customer> customers = new HashMap<String>();
-
-    var customer = new Customer(id: "1", name: "Pepe", secondName: "Gimenez",
-    email:"pgimenez@tecnocampus.cat", password:"12345678", role:"admin");
-    var product = new Product(id_product:"1", name:"peer", category:"fruit", price:"2",
-            measure:"kilo", suppliers: "Juan", client_tax:"0,42", image:"imageNotFound");
-    var product = new Product(id_product:"2", name:"tomato", category:"legume", price:"1",
-    measure:"kilo", suppliers: "Juan", client_tax:"0,21", image:"imageNotFound");
+    }
 
 }
