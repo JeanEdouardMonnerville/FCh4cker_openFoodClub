@@ -7,11 +7,11 @@ import java.util.UUID;
 public class Order {
 
     private String id_order;
-    private Costumer user;
+    private Customer user;
     private LocalDate order_date;
     private List<OrderDetail> orderDetail;
 
-    public Order( Costumer user, LocalDate order_date, List<OrderDetail> orderDetail) {
+    public Order( Customer user, LocalDate order_date, List<OrderDetail> orderDetail) {
         this.id_order = UUID.randomUUID().toString();
         this.user = user;
         this.order_date = order_date;
@@ -25,7 +25,7 @@ public class Order {
         this.id_order = id_order;
     }
 
-    public void setUser(Costumer user) {
+    public void setUser(Customer user) {
         this.user = user;
     }
 
@@ -41,7 +41,7 @@ public class Order {
         return id_order;
     }
 
-    public Costumer getUser() {
+    public Customer getUser() {
         return user;
     }
 

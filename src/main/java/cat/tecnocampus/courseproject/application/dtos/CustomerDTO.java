@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class CostumerDTO {
+public class CustomerDTO {
     private String id;
     private String name;
     private String secondName;
@@ -15,7 +15,7 @@ public class CostumerDTO {
     private String password;
     public Role role;
 
-    public CostumerDTO() {
+    public CustomerDTO() {
         this.id=UUID.randomUUID().toString();
     }
 

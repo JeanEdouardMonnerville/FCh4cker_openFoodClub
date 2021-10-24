@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public class OrderDTO {
     private String id_order;
-    private CostumerDTO user;
+    private CustomerDTO user;
     private LocalDate order_date;
     private List<OrderDetailDTO> orderDetail;
 
@@ -20,7 +20,7 @@ public class OrderDTO {
         return id_order;
     }
 
-    public CostumerDTO getUser() {
+    public CustomerDTO getUser() {
         return user;
     }
 
@@ -36,7 +36,7 @@ public class OrderDTO {
         this.id_order = id_order;
     }
 
-    public void setUser(CostumerDTO user) {
+    public void setUser(CustomerDTO user) {
         this.user = user;
     }
 
