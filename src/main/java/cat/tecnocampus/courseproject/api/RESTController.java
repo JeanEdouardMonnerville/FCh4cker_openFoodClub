@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class RESTController {
     Controller controller;
+
+    public RESTController(Controller controller) {
+        this.controller=controller;
+    }
      
     @GetMapping("/api/Products")
     public List<ProductDTO> getProducts(){
