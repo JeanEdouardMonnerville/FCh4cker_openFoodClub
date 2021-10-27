@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class UrlController {
     
-    @GetMapping(path= "/")
+    @GetMapping(path= "/index")
     public String init(){
         return "products";
     }
