@@ -1,7 +1,7 @@
 const listProducts = $("#rowgrid");
 const validOrderButton = $("#validOrder");
-const urlProducts = "http://localhost:8080/api/Products";
-const urlOrder = "http://localhost:8080/api/Order/";
+const urlProducts = "http://localhost:8080/api/products";
+const urlOrder = "http://localhost:8080/api/order/";
 
 const currentUser = {
   name: "Pepe",

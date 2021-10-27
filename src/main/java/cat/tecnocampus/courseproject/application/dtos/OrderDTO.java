@@ -10,7 +10,7 @@ public class OrderDTO {
     private String id_order;
     private CustomerDTO user;
     private LocalDate order_date;
-    private List<OrderDetailDTO> orderDetail;
+    private List<SubscriptionDTO> orderDetail;
 
     public OrderDTO() {
        this.id_order = UUID.randomUUID().toString();
@@ -28,7 +28,7 @@ public class OrderDTO {
         return order_date;
     }
 
-    public List<OrderDetailDTO> getOrderDetail() {
+    public List<SubscriptionDTO> getOrderDetail() {
         return orderDetail;
     }
 
@@ -44,7 +44,7 @@ public class OrderDTO {
         this.order_date = order_date;
     }
 
-    public void setOrderDetail(List<OrderDetailDTO> orderDetail) {
+    public void setOrderDetail(List<SubscriptionDTO> orderDetail) {
         this.orderDetail = orderDetail;
     }
     

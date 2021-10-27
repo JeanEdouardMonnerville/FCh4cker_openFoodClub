@@ -8,14 +8,14 @@ public class Product {
     private String id_product;
     private String name;
     private String category;
-    private int price;
+    private double price;
     private String measure;
     private String suppliers;
     private String client_tax;
     private String image;
 
 
-    public Product(String name, String category, int price, String measure, String suppliers, String client_tax, String image) {
+    public Product(String name, String category, double price, String measure, String suppliers, String client_tax, String image) {
         this.id_product = UUID.randomUUID().toString();
         this.name = name;
         this.category = category;
@@ -46,7 +46,7 @@ public class Product {
         return category;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
@@ -75,7 +75,7 @@ public class Product {
         this.category = category;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

@@ -6,7 +6,7 @@ public class ProductDTO {
     private String id_product;
     private String name;
     private String category;
-    private int price;
+    private double price;
     private String measure;
     private String suppliers;
     private String client_tax;
@@ -28,7 +28,7 @@ public class ProductDTO {
         return category;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
@@ -60,7 +60,7 @@ public class ProductDTO {
         this.category = category;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

@@ -1,10 +1,7 @@
 package cat.tecnocampus.courseproject.application.dtos;
 
-import cat.tecnocampus.courseproject.domain.Order;
 import cat.tecnocampus.courseproject.domain.Role;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 public class CustomerDTO {

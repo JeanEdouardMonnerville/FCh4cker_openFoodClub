@@ -1,20 +1,19 @@
 package cat.tecnocampus.courseproject.application.dtos;
 
-public class OrderDetailDTO {
+public class SubscriptionDTO {
 
     private int quantity;
-    private OrderDTO order;
+    private CustomerDTO customer;
     private ProductDTO product;
 
-    public OrderDetailDTO() {
-    }
+    public SubscriptionDTO() {}
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
-    public void setOrder(OrderDTO order) {
-        this.order = order;
+    public void setCustomer(CustomerDTO customer) {
+        this.customer = customer;
     }
 
     public void setProduct(ProductDTO product) {
@@ -25,8 +24,8 @@ public class OrderDetailDTO {
         return quantity;
     }
 
-    public OrderDTO getOrder() {
-        return order;
+    public CustomerDTO getCustomer() {
+        return customer;
     }
 
     public ProductDTO getProduct() {

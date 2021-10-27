@@ -1,10 +1,13 @@
 package cat.tecnocampus.courseproject.api;
 
 import cat.tecnocampus.courseproject.application.Controller;
+import cat.tecnocampus.courseproject.application.dtos.CustomerDTO;
 import cat.tecnocampus.courseproject.application.dtos.OrderDTO;
 import cat.tecnocampus.courseproject.application.dtos.ProductDTO;
 
 import java.util.List;
+
+import cat.tecnocampus.courseproject.application.dtos.SubscriptionDTO;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +22,7 @@ public class RESTController {
         this.controller=controller;
     }
      
-    @GetMapping("/api/Products")
+    @GetMapping("/api/products")
     public List<ProductDTO> getProducts(){
         return controller.getAllProducts();
     }
@@ -34,22 +37,19 @@ public class RESTController {
      //   return controller.getCurrentOrderOfUser(id);
    // }
     
-    
-     @PostMapping("/api/Order/")
+/*
+     @PostMapping("/api/order/")
      public void addOrder(@RequestBody OrderDTO order ){
             controller.addOrder(order);
      }
-     
+*/
      /*
      @Param quantity : indicate the quantity of the product added. If no value
      entered, we will considerate quantity=1
      */
-     @PostMapping("/api/Order/Product/")
-     public void addAProduct(@RequestBody OrderDTO order,
-             @RequestBody ProductDTO product,
-             @RequestBody int quantity){
-         
-         controller.addProductOnOrder(order, product, quantity);
+     @PostMapping("/api/{getId}/{orderId}/{productId}/")
+     public void addAProduct(@RequestBody String customerId, @RequestBody String productId, @RequestBody int quantity){
+         controller.addProductOnSubscription(customerId, productId, quantity);
      }
          
 
