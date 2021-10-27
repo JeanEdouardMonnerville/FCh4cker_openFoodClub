@@ -1,8 +1,11 @@
 package cat.tecnocampus.courseproject.application.dtos;
 
+import java.time.LocalDate;
+
 public class SubscriptionDTO {
 
     private int quantity;
+    private LocalDate date;
     private CustomerDTO customer;
     private ProductDTO product;
 
@@ -20,6 +23,8 @@ public class SubscriptionDTO {
         this.product = product;
     }
 
+    public void setDate(LocalDate date) { this.date = date; }
+
     public int getQuantity() {
         return quantity;
     }
@@ -31,5 +36,7 @@ public class SubscriptionDTO {
     public ProductDTO getProduct() {
         return product;
     }
-    
+
+    public LocalDate getDate() { return date; }
+
 }

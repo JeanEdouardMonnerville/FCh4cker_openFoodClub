@@ -6,6 +6,7 @@ import cat.tecnocampus.courseproject.application.dtos.ProductDTO;
 import cat.tecnocampus.courseproject.domain.Customer;
 import cat.tecnocampus.courseproject.domain.Subscription;
 import cat.tecnocampus.courseproject.domain.Product;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +20,7 @@ public class Controller {
     private HashMap<String, Customer> customers;
     private ArrayList<Subscription> subscriptions;
 
-    public void setOrderDetails(ArrayList<Subscription> subscriptions) {
+    public void setSubscriptions(ArrayList<Subscription> subscriptions) {
         this.subscriptions = subscriptions;
     }
 
@@ -43,6 +44,15 @@ public class Controller {
         return null;
     }
 
+    //TBD: get a list of all subscriptions
+    public List<SubscriptionDTO> getAllSubscription() {
+        List<SubscriptionDTO> listSubscription = new ArrayList<>();
+        for (Subscription s : subscriptions) {
+            listSubscription.add(subscriptionToSubscriptionDTO(s));
+        }
+        return listSubscription;
+    }
+
     //TBD: get the customer connected
     //public CustomerDTO getCustomerConnected() {
     //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -64,6 +74,7 @@ public class Controller {
         subscriptionDTO.setProduct(productDTO);
         subscriptionDTO.setCustomer(customerDTO);
         subscriptionDTO.setQuantity(quantity);
+        subscriptionDTO.setDate(LocalDate.now());
 
         subscriptions.add(subscriptionDTOToSubscription(subscriptionDTO));
     }
@@ -100,6 +111,7 @@ public class Controller {
     private SubscriptionDTO subscriptionToSubscriptionDTO(Subscription subscription) {
         SubscriptionDTO subscriptionDTO = new SubscriptionDTO();
         subscriptionDTO.setQuantity(subscription.getQuantity());
+        subscriptionDTO.setDate(subscription.getDate());
         subscriptionDTO.setProduct(productToProductDTO(subscription.getProduct()));
         subscriptionDTO.setCustomer(customerToCustomerDTO(subscription.getCustomer()));
         return subscriptionDTO;
@@ -107,6 +119,7 @@ public class Controller {
     private Subscription subscriptionDTOToSubscription(SubscriptionDTO subscriptionDTO){
         Subscription subscription = new Subscription();
         subscription.setQuantity(subscriptionDTO.getQuantity());
+        subscription.setDate(subscriptionDTO.getDate());
         subscription.setProduct(productDTOToProduct(subscriptionDTO.getProduct()));
         subscription.setCustomer(customerDTOToCustomer(subscriptionDTO.getCustomer()));
         return subscription;
