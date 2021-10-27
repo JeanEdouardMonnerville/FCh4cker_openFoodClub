@@ -37,7 +37,7 @@ public class WebApplication implements CommandLineRunner {
         product1.setId_product("102");
         
         products.put(product.getId_product(), product);
-        products.put(product1.getId_product(), product);
+        products.put(product1.getId_product(), product1);
         
         customers.put(customer.getId(), customer);
         
