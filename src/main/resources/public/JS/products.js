@@ -1,13 +1,12 @@
 const listProducts = $("#rowgrid");
 const validOrderButton = $("#validOrder");
 const urlProducts = "http://localhost:8080/api/products";
-const urlOrder = "http://localhost:8080/api/order/";
+const urlSubsription = "http://localhost:8080/api/subscription";
 
 const currentUser = {
+  id: "1",
   name: "Pepe",
   secondname: "Gimenez",
-  email: "pgimenez@tecnocampus.cat",
-  password: "12345678",
   role: "USER"
 };
 
@@ -19,32 +18,26 @@ validOrderButton.click(function (event) {
   let currentDate = "" + date.getDate() + "/" + month + "/" + date.getFullYear();
 
   let products = document.getElementsByClassName("productquantity");
-  let newOrderDetails = [];
-  for (let p of products) {
-    if (p.value > 0) {
-      newOrderDetails.push({
-        quantity: p.value,
-        order: "1",
-        product: p.id
-      })
-    }
-  }
-  
-
-  let newOrder = {
-    order_date: currentDate,
-    orderDetail: newOrderDetails,
-    user: currentUser
-  };
-  console.log(newOrder);
-  $.post(urlOrder, newOrder);
+for(let p of products){
+  let newId =  p.id;
+  let newValue = p.valueAsNumber;
+  let user = currentUser.id;
+  //$.post(urlSubsription, {customerId:user, productId:newId, quantity:newValue},function (result){},"json");
+$.ajax({
+  type:"POST",
+  url:urlSubsription,
+  data:{customerId:user, productId:newId, quantity:newValue},
+  dataType:"json",
+  contentType:"application/json"
+});
+}
 })
+
 
 getProducts();
 
 function getProducts() {
   $.get(urlProducts, function (data) {
-    console.log(data);
     for (let d of data) {
       insertProduct(d);
     }

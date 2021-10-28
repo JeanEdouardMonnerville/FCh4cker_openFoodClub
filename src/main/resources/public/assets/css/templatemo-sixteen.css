@@ -555,7 +555,7 @@ header .navbar {
 /* Call To Action */
 
 .call-to-action .inner-content {
-	margin-top: 60px;
+	margin-top: 200px;
 	padding: 30px;
 	background-color: #f7f7f7;
 	border-radius: 5px;
@@ -591,7 +591,7 @@ footer {
 
 footer .inner-content {
 	border-top: 1px solid #eee;
-	margin-top: 60px;
+	margin-top: 300px;
 	padding: 60px 0px;
 }
 
