@@ -4,7 +4,12 @@ import cat.tecnocampus.courseproject.application.Controller;
 import cat.tecnocampus.courseproject.domain.Customer;
 import cat.tecnocampus.courseproject.domain.Product;
 import cat.tecnocampus.courseproject.domain.Role;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
+
+import cat.tecnocampus.courseproject.domain.Subscription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -27,6 +32,7 @@ public class WebApplication implements CommandLineRunner {
     public void run(String... strings) throws Exception {
         HashMap<String, Product> products = new HashMap<>();
         HashMap<String, Customer> customers = new HashMap<>();
+        ArrayList<Subscription> subscriptions = new ArrayList<>();
         
         Customer customer = new Customer("Pepe", "Gimenez", "pgimenez@tecnocampus.cat", "12345678", Role.USER);
         customer.setId("1");
@@ -35,15 +41,19 @@ public class WebApplication implements CommandLineRunner {
         Product product1 = new Product("tomato", "legume", 1, "kilo", "Juan", "0,21", "https://www.sementesfeltrin.com.br/_uploads/produtofoto/produtofoto_561_3673_orig.jpg");
         product.setId_product("101");
         product1.setId_product("102");
+
+        Subscription subscription = new Subscription(5, LocalDate.now(), product, customer);
         
         products.put(product.getId_product(), product);
         products.put(product1.getId_product(), product1);
         
         customers.put(customer.getId(), customer);
-        
+
+        subscriptions.add(subscription);
+
         controller.setCustomers(customers);
         controller.setProducts(products);
-
+        controller.setSubscriptions(subscriptions);
     }
 
 }

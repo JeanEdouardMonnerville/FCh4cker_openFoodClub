@@ -8,6 +8,7 @@ import cat.tecnocampus.courseproject.application.dtos.ProductDTO;
 import java.util.List;
 
 import cat.tecnocampus.courseproject.application.dtos.SubscriptionDTO;
+import cat.tecnocampus.courseproject.domain.Subscription;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +27,12 @@ public class RESTController {
     public List<ProductDTO> getProducts(){
         return controller.getAllProducts();
     }
-    
+
+    @GetMapping("/api/subscriptions")
+    public List<SubscriptionDTO> getSubscriptions(){
+        return controller.getAllSubscription();
+    }
+
     //@GetMapping("/User")
     //public CustomerDTO getCurrentCustomer(){
       //  return controller.getCustomerConnected();
