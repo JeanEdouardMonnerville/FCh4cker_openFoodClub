@@ -47,7 +47,7 @@ public class RESTController {
      @Param quantity : indicate the quantity of the product added. If no value
      entered, we will considerate quantity=1
      */
-     @PostMapping("/api/{getId}/{orderId}/{productId}/")
+     @PostMapping("/api/subscription")
      public void addAProduct(@RequestBody String customerId, @RequestBody String productId, @RequestBody int quantity){
          controller.addProductOnSubscription(customerId, productId, quantity);
      }
