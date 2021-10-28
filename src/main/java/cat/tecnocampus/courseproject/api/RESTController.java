@@ -33,28 +33,13 @@ public class RESTController {
         return controller.getAllSubscription();
     }
 
-    //@GetMapping("/User")
-    //public CustomerDTO getCurrentCustomer(){
-      //  return controller.getCustomerConnected();
-    //}
-    
-    //@GetMapping("/User/{id}/Order")
-   // public OrderDTO getCurrentOrderOfACurrentUser(@PathVariable String id){
-     //   return controller.getCurrentOrderOfUser(id);
-   // }
-    
-/*
-     @PostMapping("/api/order/")
-     public void addOrder(@RequestBody OrderDTO order ){
-            controller.addOrder(order);
-     }
-*/
-     /*
-     @Param quantity : indicate the quantity of the product added. If no value
-     entered, we will considerate quantity=1
-     */
+    /*
+    Ca marche mais c'est moche
+    */
      @PostMapping("/api/subscription")
-     public void addAProduct(@RequestBody String customerId, @RequestBody String productId, @RequestBody int quantity){
+     public void addAProduct(   @RequestParam String customerId, 
+                                @RequestParam String productId, 
+                                @RequestParam int quantity){
          controller.addProductOnSubscription(customerId, productId, quantity);
      }
          

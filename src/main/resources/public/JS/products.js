@@ -12,25 +12,21 @@ const currentUser = {
 
 
 validOrderButton.click(function (event) {
-  let date = new Date();
-
-  let month = date.getMonth() + 1;
-  let currentDate = "" + date.getDate() + "/" + month + "/" + date.getFullYear();
 
   let products = document.getElementsByClassName("productquantity");
-for(let p of products){
-  let newId =  p.id;
-  let newValue = p.valueAsNumber;
-  let user = currentUser.id;
-  //$.post(urlSubsription, {customerId:user, productId:newId, quantity:newValue},function (result){},"json");
-$.ajax({
-  type:"POST",
-  url:urlSubsription,
-  data:{customerId:user, productId:newId, quantity:newValue},
-  dataType:"json",
-  contentType:"application/json"
-});
-}
+
+  for (let p of products) {
+    let newId = p.id;
+    let newValue = p.valueAsNumber;
+    let user = currentUser.id;
+    //$.post(urlSubsription, {customerId:user, productId:newId, quantity:newValue},function (result){},"json");
+
+    $.ajax({
+      type: "POST",
+      url: urlSubsription+`?customerId=${user}&productId=${newId}&quantity=${newValue}`,
+      contentType: "application/json"
+    });
+  }
 })
 
 
