@@ -2,3 +2,19 @@
     width: 296px;
     height: 295px;
 }
+
+input#validOrder{
+    margin: 44px 28em;
+    border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 10px 10px 10px 10px;
+    -ms-border-radius: 10px 10px 10px 10px;
+    -o-border-radius: 10px 10px 10px 10px;
+    cursor: pointer;
+    background-color: #F33F3F;
+}
+
+input#validOrder:hover{
+    background-color: black;
+    color: #F33F3F;
+}

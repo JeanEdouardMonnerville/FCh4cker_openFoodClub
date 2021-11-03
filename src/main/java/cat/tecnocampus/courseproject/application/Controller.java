@@ -122,8 +122,6 @@ public class Controller {
         customerdto.setEmail(user.getEmail());
         customerdto.setName(user.getName());
         customerdto.setId(user.getId());
-        customerdto.setPassword(user.getPassword());
-        customerdto.setRole(user.getRole());
         customerdto.setSecondName(user.getSecondName());
         return customerdto;
     }
@@ -131,9 +129,7 @@ public class Controller {
         Customer customer = new Customer();
         customer.setEmail(customerdto.getEmail());
         customer.setName(customerdto.getName());
-        customer.setId(customerdto.getId());
-        customer.setPassword(customerdto.getPassword());
-        customer.setRole(customerdto.getRole());
+        customer.setId(customerdto.getId());     
         customer.setSecondName(customerdto.getSecondName());
         return customer;
     }

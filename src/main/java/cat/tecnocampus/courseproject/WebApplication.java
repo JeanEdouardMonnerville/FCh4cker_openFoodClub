@@ -3,7 +3,6 @@ package cat.tecnocampus.courseproject;
 import cat.tecnocampus.courseproject.application.Controller;
 import cat.tecnocampus.courseproject.domain.Customer;
 import cat.tecnocampus.courseproject.domain.Product;
-import cat.tecnocampus.courseproject.domain.Role;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -34,7 +33,7 @@ public class WebApplication implements CommandLineRunner {
         HashMap<String, Customer> customers = new HashMap<>();
         ArrayList<Subscription> subscriptions = new ArrayList<>();
         
-        Customer customer = new Customer("Pepe", "Gimenez", "pgimenez@tecnocampus.cat", "12345678", Role.USER);
+        Customer customer = new Customer("Pepe", "Gimenez", "pgimenez@tecnocampus.cat");
         customer.setId("1");
         
         Product product = new Product("peer", "fruit", 2, "kilo", "Juan", "0,42", "https://images.hermie.com/images/articles/large/plantenfiche-pyrus-communis-conference-conference-peer-15515.jpg");

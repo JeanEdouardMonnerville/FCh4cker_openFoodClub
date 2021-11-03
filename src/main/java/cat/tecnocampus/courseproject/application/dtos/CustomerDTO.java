@@ -1,16 +1,16 @@
 package cat.tecnocampus.courseproject.application.dtos;
 
-import cat.tecnocampus.courseproject.domain.Role;
+
 
 import java.util.UUID;
+
 
 public class CustomerDTO {
     private String id;
     private String name;
     private String secondName;
     private String email;
-    private String password;
-    public Role role;
+
 
     public CustomerDTO() {
         this.id=UUID.randomUUID().toString();
@@ -32,13 +32,7 @@ public class CustomerDTO {
         return email;
     }
 
-    public String getPassword() {
-        return password;
-    }
 
-    public Role getRole() {
-        return role;
-    }
 
     public void setId(String id) {
         this.id = id;
@@ -56,13 +50,6 @@ public class CustomerDTO {
         this.email = email;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
     
     
 }
