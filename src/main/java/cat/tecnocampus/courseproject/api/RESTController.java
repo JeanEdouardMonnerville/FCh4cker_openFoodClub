@@ -1,6 +1,7 @@
 package cat.tecnocampus.courseproject.api;
 
 import cat.tecnocampus.courseproject.application.Controller;
+import cat.tecnocampus.courseproject.application.daos.ProductDAO;
 import cat.tecnocampus.courseproject.application.dtos.CustomerDTO;
 import cat.tecnocampus.courseproject.application.dtos.OrderDTO;
 import cat.tecnocampus.courseproject.application.dtos.ProductDTO;
@@ -13,11 +14,12 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 
-
+@RequestMapping("/api/v1")
 @Validated
 @RestController
 public class RESTController {
     Controller controller;
+    private ProductDAO productDAO;
 
     public RESTController(Controller controller) {
         this.controller=controller;
@@ -31,6 +33,11 @@ public class RESTController {
     @GetMapping("/api/subscriptions")
     public List<SubscriptionDTO> getSubscriptions(){
         return controller.getAllSubscription();
+    }
+
+    @GetMapping("/products")
+    public List<ProductDTO> getAllProducts() {
+        return productDAO.getAllProducts();
     }
 
     //@GetMapping("/User")

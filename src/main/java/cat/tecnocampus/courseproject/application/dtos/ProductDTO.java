@@ -1,23 +1,28 @@
 package cat.tecnocampus.courseproject.application.dtos;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 public class ProductDTO {
-    private String id_product;
+    private String id;
     private String name;
-    private String category;
     private double price;
-    private String measure;
-    private String suppliers;
-    private String client_tax;
+    private String measure_unit;
+    private String provider;
+    private String vat_type;
+    private String category;
+    private LocalDate initial_date;
+    private String day_of_week;
+    private int num_of_periods;
+    private String period;
     private String image;
 
     public ProductDTO() {
-         this.id_product = UUID.randomUUID().toString();
+         this.id = UUID.randomUUID().toString();
     }
 
     public String getId_product() {
-        return id_product;
+        return id;
     }
 
     public String getName() {
@@ -33,15 +38,15 @@ public class ProductDTO {
     }
 
     public String getMeasure() {
-        return measure;
+        return measure_unit;
     }
 
     public String getSuppliers() {
-        return suppliers;
+        return provider;
     }
 
     public String getClient_tax() {
-        return client_tax;
+        return vat_type;
     }
 
     public String getImage() {
@@ -49,7 +54,7 @@ public class ProductDTO {
     }
 
     public void setId_product(String id_product) {
-        this.id_product = id_product;
+        this.id = id_product;
     }
 
     public void setName(String name) {
@@ -65,15 +70,15 @@ public class ProductDTO {
     }
 
     public void setMeasure(String measure) {
-        this.measure = measure;
+        this.measure_unit = measure;
     }
 
-    public void setSuppliers(String suppliers) {
-        this.suppliers = suppliers;
+    public void setSuppliers(String provider) {
+        this.provider = provider;
     }
 
-    public void setClient_tax(String client_tax) {
-        this.client_tax = client_tax;
+    public void setClient_tax(String vat_type) {
+        this.vat_type= vat_type;
     }
 
     public void setImage(String image) {
