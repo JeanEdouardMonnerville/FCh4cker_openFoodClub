@@ -1,5 +1,6 @@
 package cat.tecnocampus.courseproject.application;
 
+import cat.tecnocampus.courseproject.application.daos.CustomerDAO;
 import cat.tecnocampus.courseproject.application.dtos.CustomerDTO;
 import cat.tecnocampus.courseproject.application.dtos.SubscriptionDTO;
 import cat.tecnocampus.courseproject.application.dtos.ProductDTO;
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Component;
 public class Controller {
 
     private HashMap<String, Product> products;
-    private HashMap<String, Customer> customers;
+    private CustomerDAO customerDAO;
     private ArrayList<Subscription> subscriptions;
 
     public void setSubscriptions(ArrayList<Subscription> subscriptions) {
@@ -28,9 +29,7 @@ public class Controller {
         this.products = products;
     }
 
-    public void setCustomers(HashMap<String, Customer> customers) {
-        this.customers = customers;
-    }
+
 
 
     public List<ProductDTO> getAllProducts() {
@@ -52,14 +51,24 @@ public class Controller {
         }
         return listSubscription;
     }
+    
+    public CustomerDTO getCustomerByName(String name){
+        return customerDAO.getCustomerBYName(name);
+    }
 
-
+    public CustomerDTO getCustomer(String id){
+        return customerDAO.getCustomerById(id);
+    }
+    
+    public List<CustomerDTO> getCustomers(){
+        return customerDAO.getAllCustomer();
+    }
 
     public void addProductOnSubscription(String customerId, String productId, int quantity) {
         SubscriptionDTO subscriptionDTO = new SubscriptionDTO();
 
         Product product = products.get(productId);
-        Customer customer = customers.get(customerId);
+        Customer customer = customerDTOToCustomer(customerDAO.getCustomerById(customerId));
         ProductDTO productDTO = productToProductDTO(product);
         CustomerDTO customerDTO = customerToCustomerDTO(customer);
 
@@ -125,7 +134,7 @@ public class Controller {
         customerdto.setSecondName(user.getSecondName());
         return customerdto;
     }
-    private Customer customerDTOToCustomer(CustomerDTO customerdto){
+    public Customer customerDTOToCustomer(CustomerDTO customerdto){
         Customer customer = new Customer();
         customer.setEmail(customerdto.getEmail());
         customer.setName(customerdto.getName());
