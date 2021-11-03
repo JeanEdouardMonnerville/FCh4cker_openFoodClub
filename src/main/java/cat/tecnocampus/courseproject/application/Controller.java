@@ -32,7 +32,7 @@ public class Controller {
         this.customers = customers;
     }
 
-    //TBD: get a list of all products
+
     public List<ProductDTO> getAllProducts() {
         return products.values().stream().map(this::productToProductDTO).collect(Collectors.toList());
     }
@@ -44,7 +44,7 @@ public class Controller {
         return null;
     }
 
-    //TBD: get a list of all subscriptions
+
     public List<SubscriptionDTO> getAllSubscription() {
         List<SubscriptionDTO> listSubscription = new ArrayList<>();
         for (Subscription s : subscriptions) {
@@ -53,16 +53,8 @@ public class Controller {
         return listSubscription;
     }
 
-    //TBD: get the customer connected
-    //public CustomerDTO getCustomerConnected() {
-    //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    //}
-    //TBD: get the order more recent of a customer
-    // public OrderDTO getCurrentOrderOfUser(String id) {
-    //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    //}
 
-    //TBD: add an order detail linking an order and a product with a quantity
+
     public void addProductOnSubscription(String customerId, String productId, int quantity) {
         SubscriptionDTO subscriptionDTO = new SubscriptionDTO();
 
