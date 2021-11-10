@@ -29,23 +29,9 @@ public class WebApplication implements CommandLineRunner {
     
     @Override
     public void run(String... strings) throws Exception {
-        HashMap<String, Product> products = new HashMap<>();
+
         ArrayList<Subscription> subscriptions = new ArrayList<>();
-        
-        
-        Product product = new Product("peer", "fruit", 2, "kilo", "Juan", "0,42", "https://images.hermie.com/images/articles/large/plantenfiche-pyrus-communis-conference-conference-peer-15515.jpg");
-        Product product1 = new Product("tomato", "legume", 1, "kilo", "Juan", "0,21", "https://www.sementesfeltrin.com.br/_uploads/produtofoto/produtofoto_561_3673_orig.jpg");
-        product.setId_product("101");
-        product1.setId_product("102");
-
-
-       
-        
-        products.put(product.getId_product(), product);
-        products.put(product1.getId_product(), product1);
-        
-
-        controller.setProducts(products);
+ 
         controller.addProductOnSubscription("1", "101", 5);
     }
 

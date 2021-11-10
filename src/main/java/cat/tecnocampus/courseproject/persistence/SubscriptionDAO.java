@@ -10,12 +10,18 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 public class SubscriptionDAO implements cat.tecnocampus.courseproject.application.daos.SubscriptionDAO {
-//TBD : les produits proviennent d'une api, donc soit télécharge toutes les données de l'API (lourd)
-    //soit on remplace produit en domaine et DTO par produit_id et la subscription ne comportera 
-    //que l'id du produit et ensuite dans le front on reconstruit la subscription qu'on voulait 
-    //de base avec les données de l'api.
-    JdbcTemplate jdbcTemplate;
-    
+
+    private JdbcTemplate jdbcTemplate;
+    private String query_base = "SELECT s.quantity, s.sub_date, c.id as customer_id, c.name as"
+            + "customer_name, c.secondName as customer_secondName, c.email as "
+            + "customer_email, p.id as product_id, p.name as product_name,"
+            + "p.price as product_price, p.measure_unit as product_measure_unit"
+            + "p.provider as product_provider, p.var_type as product_var_type,"
+            + "p.category as product_category, p.initial_date as product_initial_date,"
+            + "p.day_of_week as product_day_of_week,p.num_of_periods product_num_of_periods,"
+            + "p.period as product_period, p.image as product_image"
+            + "FROM Subscriptions s inner join customer c on c.id=s.customer"
+            + "inner join product p on p.id=s.product";
 
     public SubscriptionDAO(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -40,28 +46,23 @@ public class SubscriptionDAO implements cat.tecnocampus.courseproject.applicatio
 
     @Override
     public List<SubscriptionDTO> getSubscription(String customerId) {
-        try{
-        String query = "Select s.quantity, s.sub_date,c.id as customer_id, "
-                + " c.name as customer_name, "
-                + " c.secondname as customer_secondname, "
-                + " c.email as customer_email from Subscription "
-                + " inner join Customer c on c.id=s.customer "
-                + " where s.customer=? ";
-        return jdbcTemplate.query(query, subscriptionsRowMapper, customerId);}
-        catch(EmptyResultDataAccessException e){
+        try {
+            String query = query_base
+                    + " where s.customer=? ";
+            return jdbcTemplate.query(query, subscriptionsRowMapper, customerId);
+        } catch (EmptyResultDataAccessException e) {
             return null;//TBD
         }
     }
 
     @Override
     public List<SubscriptionDTO> getSubscriptions() {
-        String query = "Select * from Subscription";
-        return jdbcTemplate.query(query, subscriptionsAllRowMapper);
+        return jdbcTemplate.query(query_base, subscriptionsAllRowMapper);
     }
 
     @Override
     public void addSubscription(String customerId, String productId, int quantity) {
-        if (subscriptionNotExists(customerId,productId)) {
+        if (subscriptionNotExists(customerId, productId)) {
             String query = "INSERT INTO Subscription values (?,?,?,?)";
             jdbcTemplate.update(query, quantity, LocalDate.now(), customerId, productId);
         } else {
@@ -72,10 +73,10 @@ public class SubscriptionDAO implements cat.tecnocampus.courseproject.applicatio
 
     @Override
     public void deleteSubscription(String customerId, String productId) {
-        try{
-        String query = "DELETE FROM Subscription where customer=? and product=?";
-        jdbcTemplate.update(query, customerId, productId);}
-        catch(EmptyResultDataAccessException e){
+        try {
+            String query = "DELETE FROM Subscription where customer=? and product=?";
+            jdbcTemplate.update(query, customerId, productId);
+        } catch (EmptyResultDataAccessException e) {
             //TBD
         }
     }
@@ -83,8 +84,8 @@ public class SubscriptionDAO implements cat.tecnocampus.courseproject.applicatio
     private boolean subscriptionNotExists(String productId, String customerId) {
         String query = "Select * from subscription where product=? and customer=?";
         SubscriptionDTO subscription = new SubscriptionDTO();
-        subscription =  jdbcTemplate.queryForObject(query, subscriptionRowMapper,productId,customerId);
-        if(subscription==null){
+        subscription = jdbcTemplate.queryForObject(query, subscriptionRowMapper, productId, customerId);
+        if (subscription == null) {
             return true;
         }
         return false;

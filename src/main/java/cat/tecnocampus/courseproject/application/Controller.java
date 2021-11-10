@@ -87,7 +87,7 @@ public class Controller {
      */
     private ProductDTO productToProductDTO(Product product) {
         ProductDTO productDTO = new ProductDTO();
-        productDTO.setId_product(product.getId_product());
+        productDTO.setId_product(product.getId_productz());
         productDTO.setName(product.getName());
         productDTO.setCategory(product.getCategory());
         productDTO.setPrice(product.getPrice());
