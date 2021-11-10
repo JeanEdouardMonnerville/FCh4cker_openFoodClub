@@ -2,6 +2,8 @@ package cat.tecnocampus.courseproject.persistence;
 
 import cat.tecnocampus.courseproject.application.dtos.CustomerDTO;
 import java.util.List;
+
+import cat.tecnocampus.courseproject.application.exceptions.UserDoesNotExistException;
 import org.simpleflatmapper.jdbc.spring.JdbcTemplateMapperFactory;
 import org.simpleflatmapper.jdbc.spring.ResultSetExtractorImpl;
 import org.simpleflatmapper.jdbc.spring.RowMapperImpl;
@@ -34,7 +36,7 @@ public class CustomerDAO implements cat.tecnocampus.courseproject.application.da
         try{
         return jdbcTemplate.queryForObject(query,customerRowMapper,id );}
         catch(EmptyResultDataAccessException e){
-            return null;//TBD 
+            throw new UserDoesNotExistException(id);
         }
     }
 
@@ -44,7 +46,7 @@ public class CustomerDAO implements cat.tecnocampus.courseproject.application.da
         try{
         return jdbcTemplate.queryForObject(query,customerRowMapper,name );
         }catch(EmptyResultDataAccessException e){
-            return null;//TBD
+            throw new UserDoesNotExistException(name);
         }
     }
 

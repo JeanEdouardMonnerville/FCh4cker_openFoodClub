@@ -2,6 +2,8 @@ package cat.tecnocampus.courseproject.persistence;
 
 import cat.tecnocampus.courseproject.application.dtos.ProductDTO;
 import java.util.List;
+
+import cat.tecnocampus.courseproject.application.exceptions.ProductDoesNotExistException;
 import org.simpleflatmapper.jdbc.spring.JdbcTemplateMapperFactory;
 import org.simpleflatmapper.jdbc.spring.ResultSetExtractorImpl;
 import org.simpleflatmapper.jdbc.spring.RowMapperImpl;
@@ -34,7 +36,7 @@ public class ProductDAO implements cat.tecnocampus.courseproject.application.dao
             final String query = "Select * from Product where id=?";
             return jdbctemplate.queryForObject(id, productRowMapper, id);
         } catch (EmptyResultDataAccessException e) {
-            return null;//TBD 
+            throw new ProductDoesNotExistException(id);
         }
 
     }

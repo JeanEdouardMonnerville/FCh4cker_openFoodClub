@@ -3,6 +3,8 @@ package cat.tecnocampus.courseproject.persistence;
 import cat.tecnocampus.courseproject.application.dtos.SubscriptionDTO;
 import java.time.LocalDate;
 import java.util.List;
+
+import cat.tecnocampus.courseproject.application.exceptions.SubscriptionDoesNotExistException;
 import org.simpleflatmapper.jdbc.spring.JdbcTemplateMapperFactory;
 import org.simpleflatmapper.jdbc.spring.ResultSetExtractorImpl;
 import org.simpleflatmapper.jdbc.spring.RowMapperImpl;
@@ -51,7 +53,7 @@ public class SubscriptionDAO implements cat.tecnocampus.courseproject.applicatio
                     + " where s.customer=? ";
             return jdbcTemplate.query(query, subscriptionsRowMapper, customerId);
         } catch (EmptyResultDataAccessException e) {
-            return null;//TBD
+            throw  new SubscriptionDoesNotExistException(customerId);
         }
     }
 
@@ -77,7 +79,7 @@ public class SubscriptionDAO implements cat.tecnocampus.courseproject.applicatio
             String query = "DELETE FROM Subscription where customer=? and product=?";
             jdbcTemplate.update(query, customerId, productId);
         } catch (EmptyResultDataAccessException e) {
-            //TBD
+            throw new SubscriptionDoesNotExistException(customerId, productId);
         }
     }
 
