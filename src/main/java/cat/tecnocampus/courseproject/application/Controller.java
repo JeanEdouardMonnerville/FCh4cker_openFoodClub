@@ -1,6 +1,7 @@
 package cat.tecnocampus.courseproject.application;
 
 import cat.tecnocampus.courseproject.application.daos.CustomerDAO;
+import cat.tecnocampus.courseproject.application.daos.SubscriptionDAO;
 import cat.tecnocampus.courseproject.application.dtos.CustomerDTO;
 import cat.tecnocampus.courseproject.application.dtos.SubscriptionDTO;
 import cat.tecnocampus.courseproject.application.dtos.ProductDTO;
@@ -19,11 +20,8 @@ public class Controller {
 
     private HashMap<String, Product> products;
     private CustomerDAO customerDAO;
-    private ArrayList<Subscription> subscriptions;
+    private SubscriptionDAO subscriptionDAO;
 
-    public void setSubscriptions(ArrayList<Subscription> subscriptions) {
-        this.subscriptions = subscriptions;
-    }
 
     public void setProducts(HashMap<String, Product> products) {
         this.products = products;
@@ -45,11 +43,13 @@ public class Controller {
 
 
     public List<SubscriptionDTO> getAllSubscription() {
+        /*
         List<SubscriptionDTO> listSubscription = new ArrayList<>();
         for (Subscription s : subscriptions) {
             listSubscription.add(subscriptionToSubscriptionDTO(s));
         }
-        return listSubscription;
+        return listSubscription;*/
+        return subscriptionDAO.getSubscriptions();
     }
     
     public CustomerDTO getCustomerByName(String name){
@@ -65,7 +65,7 @@ public class Controller {
     }
 
     public void addProductOnSubscription(String customerId, String productId, int quantity) {
-        SubscriptionDTO subscriptionDTO = new SubscriptionDTO();
+        /*SubscriptionDTO subscriptionDTO = new SubscriptionDTO();
 
         Product product = products.get(productId);
         Customer customer = customerDTOToCustomer(customerDAO.getCustomerById(customerId));
@@ -77,7 +77,9 @@ public class Controller {
         subscriptionDTO.setQuantity(quantity);
         subscriptionDTO.setDate(LocalDate.now());
 
-        subscriptions.add(subscriptionDTOToSubscription(subscriptionDTO));
+        subscriptions.add(subscriptionDTOToSubscription(subscriptionDTO));*/
+        subscriptionDAO.addSubscription(customerId, productId, quantity);
+        
     }
 
     /**

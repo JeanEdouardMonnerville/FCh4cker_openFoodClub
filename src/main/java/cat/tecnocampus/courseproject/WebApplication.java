@@ -38,16 +38,15 @@ public class WebApplication implements CommandLineRunner {
         product.setId_product("101");
         product1.setId_product("102");
 
-        Subscription subscription = new Subscription(5, LocalDate.now(), product, controller.customerDTOToCustomer(controller.getCustomer("1")));
+
+       
         
         products.put(product.getId_product(), product);
         products.put(product1.getId_product(), product1);
         
 
-        subscriptions.add(subscription);
-
         controller.setProducts(products);
-        controller.setSubscriptions(subscriptions);
+        controller.addProductOnSubscription("1", "101", 5);
     }
 
 }
