@@ -13,10 +13,31 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 @Component
 public class Controller {
+
+    private final RestTemplate restTemplate;
+    private static final String apiUrl = "https://productapi-1635325374837.azurewebsites.net";
+
+    public Controller(RestTemplate restTemplate) {this.restTemplate = restTemplate;}
+
+    @Scheduled(cron = "0 0 ? * MON")
+    public double getNewPrice() {
+        double newPrice = 0;
+        var price = restTemplate.getForObject(apiUrl+"/api/v1/products/price", ProductDTO.class);
+        for(int i=0;i<products.size();i++) {
+            if(products.get(i).getId().equals(price.getId_product())) {
+                newPrice = price.getPrice();
+            }
+        }
+        return newPrice;
+    }
+
 
     private HashMap<String, Product> products;
     private CustomerDAO customerDAO;
@@ -87,26 +108,26 @@ public class Controller {
      */
     private ProductDTO productToProductDTO(Product product) {
         ProductDTO productDTO = new ProductDTO();
-        productDTO.setId_product(product.getId_productz());
+        productDTO.setId_product(product.getId());
         productDTO.setName(product.getName());
         productDTO.setCategory(product.getCategory());
         productDTO.setPrice(product.getPrice());
-        productDTO.setMeasure(product.getMeasure());
-        productDTO.setSuppliers(product.getSuppliers());
-        productDTO.setClient_tax(product.getClient_tax());
+        productDTO.setMeasure(product.getMeasure_unit());
+        productDTO.setSuppliers(product.getProvider());
+        productDTO.setClient_tax(product.getVat_type());
         productDTO.setImage(product.getImage());
         return productDTO;
     }
 
     private Product productDTOToProduct(ProductDTO productDTO) {
         Product product = new Product();
-        product.setId_product(productDTO.getId_product());
+        product.setId(productDTO.getId_product());
         product.setName(productDTO.getName());
         product.setCategory(productDTO.getCategory());
         product.setPrice(productDTO.getPrice());
-        product.setMeasure(productDTO.getMeasure());
-        product.setSuppliers(productDTO.getSuppliers());
-        product.setClient_tax(productDTO.getClient_tax());
+        product.setMeasure_unit(productDTO.getMeasure());
+        product.setProvider(productDTO.getSuppliers());
+        product.setVat_type(productDTO.getClient_tax());
         product.setImage(productDTO.getImage());
         return product;
     }

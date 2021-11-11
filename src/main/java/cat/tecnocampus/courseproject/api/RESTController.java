@@ -33,6 +33,9 @@ public class RESTController {
         return controller.getAllSubscription();
     }
 
+    @GetMapping("/api/v1/products/price")
+    public double getNewPrices() {return controller.getNewPrice();}
+
     //@GetMapping("/User")
     //public CustomerDTO getCurrentCustomer(){
       //  return controller.getCustomerConnected();
