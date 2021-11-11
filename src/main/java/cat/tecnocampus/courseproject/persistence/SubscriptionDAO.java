@@ -10,20 +10,22 @@ import org.simpleflatmapper.jdbc.spring.ResultSetExtractorImpl;
 import org.simpleflatmapper.jdbc.spring.RowMapperImpl;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class SubscriptionDAO implements cat.tecnocampus.courseproject.application.daos.SubscriptionDAO {
 
     private JdbcTemplate jdbcTemplate;
-    private String query_base = "SELECT s.quantity, s.sub_date, c.id as customer_id, c.name as"
-            + "customer_name, c.secondName as customer_secondName, c.email as "
-            + "customer_email, p.id as product_id, p.name as product_name,"
-            + "p.price as product_price, p.measure_unit as product_measure_unit"
-            + "p.provider as product_provider, p.var_type as product_var_type,"
-            + "p.category as product_category, p.initial_date as product_initial_date,"
-            + "p.day_of_week as product_day_of_week,p.num_of_periods product_num_of_periods,"
-            + "p.period as product_period, p.image as product_image"
-            + "FROM Subscriptions s inner join customer c on c.id=s.customer"
-            + "inner join product p on p.id=s.product";
+    private String query_base = "SELECT s.quantity, s.sub_date, c.id as customer_id, c.name as "
+            + " customer_name, c.secondName as customer_secondName, c.email as "
+            + " customer_email, p.id as product_id, p.name as product_name, "
+            + " p.price as product_price, p.MEASURE_UNIT as product_measure_unit, "
+            + " p.provider as product_provider, p.vat_type as product_vat_type, "
+            + " p.category as product_category, p.initial_date as product_initial_date, "
+            + " p.day_of_week as product_day_of_week,p.num_of_periods product_num_of_periods, "
+            + " p.period as product_period, p.image as product_image "
+            + " FROM Subscription s inner join customer c on c.id=s.customer "
+            + " inner join product p on p.id=s.product";
 
     public SubscriptionDAO(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;

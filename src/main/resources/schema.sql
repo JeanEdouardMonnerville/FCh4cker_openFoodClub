@@ -1,4 +1,4 @@
-DROP TABLE CUSTOMER;
+DROP TABLE if exists CUSTOMER;
 Create table Customer (
     id VARCHAR(256) PRIMARY KEY,
     name VARCHAR(255),
@@ -25,12 +25,12 @@ CREATE TABLE product
     image CLOB
 );
 
-DROP TABLE Subscription;
+DROP TABLE if exists Subscription;
 Create table Subscription (
     quantity Number(255),
     sub_date DATE,
     product Varchar(255),
     customer Varchar(256),
-    CONSTRAINT fk_sub_constumer FOREIGN KEY (customer) REFERENCES customer (id) 
+    CONSTRAINT fk_sub_constumer FOREIGN KEY (customer) REFERENCES customer (id), 
     CONSTRAINT fk_prod_constumer FOREIGN KEY (product) REFERENCES product (id)
 );

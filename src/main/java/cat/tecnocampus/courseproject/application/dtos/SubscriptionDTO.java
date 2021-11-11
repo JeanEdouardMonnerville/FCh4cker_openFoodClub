@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public class SubscriptionDTO {
 
     private int quantity;
-    private LocalDate date;
+    private LocalDate sub_date;
     private CustomerDTO customer;
     private ProductDTO product;
 
@@ -23,7 +23,7 @@ public class SubscriptionDTO {
         this.product = product;
     }
 
-    public void setDate(LocalDate date) { this.date = date; }
+    public void setSub_date(LocalDate sub_date) { this.sub_date = sub_date; }
 
     public int getQuantity() {
         return quantity;
@@ -37,6 +37,6 @@ public class SubscriptionDTO {
         return product;
     }
 
-    public LocalDate getDate() { return date; }
+    public LocalDate getSub_date() { return sub_date; }
 
 }

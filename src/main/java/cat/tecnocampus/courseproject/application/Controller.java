@@ -2,12 +2,16 @@ package cat.tecnocampus.courseproject.application;
 
 import cat.tecnocampus.courseproject.application.daos.CustomerDAO;
 import cat.tecnocampus.courseproject.application.daos.SubscriptionDAO;
+import cat.tecnocampus.courseproject.application.daos.ProductDAO;
+
 import cat.tecnocampus.courseproject.application.dtos.CustomerDTO;
 import cat.tecnocampus.courseproject.application.dtos.SubscriptionDTO;
 import cat.tecnocampus.courseproject.application.dtos.ProductDTO;
+
 import cat.tecnocampus.courseproject.domain.Customer;
 import cat.tecnocampus.courseproject.domain.Subscription;
 import cat.tecnocampus.courseproject.domain.Product;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,44 +28,37 @@ public class Controller {
     private final RestTemplate restTemplate;
     private static final String apiUrl = "https://productapi-1635325374837.azurewebsites.net";
 
-    public Controller(RestTemplate restTemplate) {this.restTemplate = restTemplate;}
+    private CustomerDAO customerDAO;
+    private SubscriptionDAO subscriptionDAO;
+    private ProductDAO productDao;
+
+    public Controller(RestTemplate restTemplate, CustomerDAO customerDAO, SubscriptionDAO subscriptionDAO, ProductDAO productDao) {
+        this.restTemplate = restTemplate;
+        this.customerDAO = customerDAO;
+        this.subscriptionDAO = subscriptionDAO;
+        this.productDao = productDao;
+    }
 
     @Scheduled(cron = "0 0 ? * MON")
     public double getNewPrice() {
         double newPrice = 0;
-        var price = restTemplate.getForObject(apiUrl+"/api/v1/products/price", ProductDTO.class);
-        for(int i=0;i<products.size();i++) {
-            if(products.get(i).getId().equals(price.getId_product())) {
+        List<ProductDTO> products = productDao.getAll();
+        var price = restTemplate.getForObject(apiUrl + "/api/v1/products/price", ProductDTO.class);
+        for (int i = 0; i < products.size(); i++) {
+            if (products.get(i).getId().equals(price.getId())) {
                 newPrice = price.getPrice();
             }
         }
         return newPrice;
     }
 
-
-    private HashMap<String, Product> products;
-    private CustomerDAO customerDAO;
-    private SubscriptionDAO subscriptionDAO;
-
-
-    public void setProducts(HashMap<String, Product> products) {
-        this.products = products;
-    }
-
-
-
-
     public List<ProductDTO> getAllProducts() {
-        return products.values().stream().map(this::productToProductDTO).collect(Collectors.toList());
+        return productDao.getAll();
     }
 
     public ProductDTO getOneProduct(String id) {
-        if (products.containsKey(id)) {
-            return productToProductDTO(products.get(id));
-        }
-        return null;
+        return productDao.getById(id);
     }
-
 
     public List<SubscriptionDTO> getAllSubscription() {
         /*
@@ -72,16 +69,16 @@ public class Controller {
         return listSubscription;*/
         return subscriptionDAO.getSubscriptions();
     }
-    
-    public CustomerDTO getCustomerByName(String name){
+
+    public CustomerDTO getCustomerByName(String name) {
         return customerDAO.getCustomerBYName(name);
     }
 
-    public CustomerDTO getCustomer(String id){
+    public CustomerDTO getCustomer(String id) {
         return customerDAO.getCustomerById(id);
     }
-    
-    public List<CustomerDTO> getCustomers(){
+
+    public List<CustomerDTO> getCustomers() {
         return customerDAO.getAllCustomer();
     }
 
@@ -100,7 +97,7 @@ public class Controller {
 
         subscriptions.add(subscriptionDTOToSubscription(subscriptionDTO));*/
         subscriptionDAO.addSubscription(customerId, productId, quantity);
-        
+
     }
 
     /**
@@ -108,26 +105,26 @@ public class Controller {
      */
     private ProductDTO productToProductDTO(Product product) {
         ProductDTO productDTO = new ProductDTO();
-        productDTO.setId_product(product.getId());
+        productDTO.setId(product.getId());
         productDTO.setName(product.getName());
         productDTO.setCategory(product.getCategory());
         productDTO.setPrice(product.getPrice());
-        productDTO.setMeasure(product.getMeasure_unit());
-        productDTO.setSuppliers(product.getProvider());
-        productDTO.setClient_tax(product.getVat_type());
+        productDTO.setMeasure_unit(product.getMeasure_unit());
+        productDTO.setProvider(product.getProvider());
+        productDTO.setVat_type(product.getVat_type());
         productDTO.setImage(product.getImage());
         return productDTO;
     }
 
     private Product productDTOToProduct(ProductDTO productDTO) {
         Product product = new Product();
-        product.setId(productDTO.getId_product());
+        product.setId(productDTO.getId());
         product.setName(productDTO.getName());
         product.setCategory(productDTO.getCategory());
         product.setPrice(productDTO.getPrice());
-        product.setMeasure_unit(productDTO.getMeasure());
-        product.setProvider(productDTO.getSuppliers());
-        product.setVat_type(productDTO.getClient_tax());
+        product.setMeasure_unit(productDTO.getMeasure_unit());
+        product.setProvider(productDTO.getProvider());
+        product.setVat_type(productDTO.getVat_type());
         product.setImage(productDTO.getImage());
         return product;
     }
@@ -135,15 +132,16 @@ public class Controller {
     private SubscriptionDTO subscriptionToSubscriptionDTO(Subscription subscription) {
         SubscriptionDTO subscriptionDTO = new SubscriptionDTO();
         subscriptionDTO.setQuantity(subscription.getQuantity());
-        subscriptionDTO.setDate(subscription.getDate());
+        subscriptionDTO.setSub_date(subscription.getDate());
         subscriptionDTO.setProduct(productToProductDTO(subscription.getProduct()));
         subscriptionDTO.setCustomer(customerToCustomerDTO(subscription.getCustomer()));
         return subscriptionDTO;
     }
-    private Subscription subscriptionDTOToSubscription(SubscriptionDTO subscriptionDTO){
+
+    private Subscription subscriptionDTOToSubscription(SubscriptionDTO subscriptionDTO) {
         Subscription subscription = new Subscription();
         subscription.setQuantity(subscriptionDTO.getQuantity());
-        subscription.setDate(subscriptionDTO.getDate());
+        subscription.setDate(subscriptionDTO.getSub_date());
         subscription.setProduct(productDTOToProduct(subscriptionDTO.getProduct()));
         subscription.setCustomer(customerDTOToCustomer(subscriptionDTO.getCustomer()));
         return subscription;
@@ -157,11 +155,12 @@ public class Controller {
         customerdto.setSecondName(user.getSecondName());
         return customerdto;
     }
-    public Customer customerDTOToCustomer(CustomerDTO customerdto){
+
+    public Customer customerDTOToCustomer(CustomerDTO customerdto) {
         Customer customer = new Customer();
         customer.setEmail(customerdto.getEmail());
         customer.setName(customerdto.getName());
-        customer.setId(customerdto.getId());     
+        customer.setId(customerdto.getId());
         customer.setSecondName(customerdto.getSecondName());
         return customer;
     }

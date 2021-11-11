@@ -9,7 +9,9 @@ import org.simpleflatmapper.jdbc.spring.ResultSetExtractorImpl;
 import org.simpleflatmapper.jdbc.spring.RowMapperImpl;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class ProductDAO implements cat.tecnocampus.courseproject.application.daos.ProductDAO {
 
     JdbcTemplate jdbctemplate;
