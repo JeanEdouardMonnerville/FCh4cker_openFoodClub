@@ -18,3 +18,9 @@ input#validOrder:hover{
     background-color: black;
     color: #F33F3F;
 }
+
+.down-content{
+    display: flow-root list-item;
+    list-style: none;
+  }
+
