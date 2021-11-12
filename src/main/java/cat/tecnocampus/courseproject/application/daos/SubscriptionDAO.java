@@ -8,6 +8,7 @@ public interface SubscriptionDAO {
     
     public List<SubscriptionDTO> getSubscription(String customerId);
     public List<SubscriptionDTO> getSubscriptions();
+    public SubscriptionDTO getOneByID(int id);
     
     public void addSubscription(String customerId, String productId, int quantity);
     

@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 public class SubscriptionDAO implements cat.tecnocampus.courseproject.application.daos.SubscriptionDAO {
 
     private JdbcTemplate jdbcTemplate;
-    private String query_base = "SELECT s.quantity, s.sub_date, c.id as customer_id, c.name as "
+    private String query_base = "SELECT s.id, s.quantity, s.sub_date, c.id as customer_id, c.name as "
             + " customer_name, c.secondName as customer_secondName, c.email as "
             + " customer_email, p.id as product_id, p.name as product_name, "
             + " p.price as product_price, p.MEASURE_UNIT as product_measure_unit, "
@@ -31,21 +31,16 @@ public class SubscriptionDAO implements cat.tecnocampus.courseproject.applicatio
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    ResultSetExtractorImpl<SubscriptionDTO> subscriptionsAllRowMapper
-            = JdbcTemplateMapperFactory
-                    .newInstance()
-                    .newResultSetExtractor(SubscriptionDTO.class);
-
     ResultSetExtractorImpl<SubscriptionDTO> subscriptionsRowMapper
             = JdbcTemplateMapperFactory
                     .newInstance()
-                    .addKeys("customer")
+                    .addKeys("id")
                     .newResultSetExtractor(SubscriptionDTO.class);
 
     RowMapperImpl<SubscriptionDTO> subscriptionRowMapper
             = JdbcTemplateMapperFactory
                     .newInstance()
-                    //.addKeys("customer,product")
+                    .addKeys("id")
                     .newRowMapper(SubscriptionDTO.class);
 
     @Override
@@ -61,7 +56,7 @@ public class SubscriptionDAO implements cat.tecnocampus.courseproject.applicatio
 
     @Override
     public List<SubscriptionDTO> getSubscriptions() {
-        return jdbcTemplate.query(query_base, subscriptionsAllRowMapper);
+        return jdbcTemplate.query(query_base, subscriptionsRowMapper);
     }
 
     @Override
@@ -73,7 +68,7 @@ public class SubscriptionDAO implements cat.tecnocampus.courseproject.applicatio
             System.out.println("INSERT################");
         } else {
             String query = "UPDATE Subscription SET quantity=?,sub_date=? where customer=? and product=?";
-            jdbcTemplate.update(query, quantity, LocalDate.now(), customerId,productId);
+            jdbcTemplate.update(query, quantity, LocalDate.now(), customerId, productId);
             System.out.println("UPDATE################");
         }
     }
@@ -90,13 +85,23 @@ public class SubscriptionDAO implements cat.tecnocampus.courseproject.applicatio
 
     private boolean subscriptionNotExists(String productId, String customerId) {
         boolean result = true;
-        List<SubscriptionDTO> subsciptions = jdbcTemplate.query(query_base, subscriptionsAllRowMapper);
-        for(SubscriptionDTO s : subsciptions){
-            if(s.getCustomer().getId().equals(customerId) && s.getProduct().getId().equals(productId) ){
-                result=false;
+        List<SubscriptionDTO> subsciptions = jdbcTemplate.query(query_base, subscriptionsRowMapper);
+        for (SubscriptionDTO s : subsciptions) {
+            if (s.getCustomer().getId().equals(customerId) && s.getProduct().getId().equals(productId)) {
+                result = false;
             }
         }
         return result;
+    }
+
+    @Override
+    public SubscriptionDTO getOneByID(int id) {
+        String query = query_base + " Where id=?";
+        try {
+            return jdbcTemplate.queryForObject(query, subscriptionRowMapper, id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new SubscriptionDoesNotExistException(id);
+        }
     }
 
 }

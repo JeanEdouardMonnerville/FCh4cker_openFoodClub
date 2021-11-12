@@ -1,15 +1,18 @@
 package cat.tecnocampus.courseproject.application.dtos;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 public class SubscriptionDTO {
 
+    private int id;
     private int quantity;
     private LocalDate sub_date;
     private CustomerDTO customer;
     private ProductDTO product;
 
-    public SubscriptionDTO() {}
+    public SubscriptionDTO() {
+    }
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;

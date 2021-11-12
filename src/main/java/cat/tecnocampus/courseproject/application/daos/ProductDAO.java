@@ -8,4 +8,6 @@ public interface ProductDAO {
     public ProductDTO getById(String id);
     public List<ProductDTO> getAll();
     
+    public void updatePrice(String id);
+    
 }

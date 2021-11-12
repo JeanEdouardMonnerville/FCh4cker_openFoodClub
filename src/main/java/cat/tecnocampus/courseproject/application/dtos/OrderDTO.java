@@ -1,51 +1,72 @@
 package cat.tecnocampus.courseproject.application.dtos;
 
-
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
 
-
 public class OrderDTO {
-    private String id_order;
-    private CustomerDTO user;
-    private LocalDate order_date;
-    private List<SubscriptionDTO> orderDetail;
+
+    private String id;
+    private CustomerDTO customer;
+    private List<SubscriptionDTO> order_details;
+    private LocalDateTime creation_date;
+    private boolean open;
 
     public OrderDTO() {
-       this.id_order = UUID.randomUUID().toString();
+        this.id = UUID.randomUUID().toString();
     }
 
-    public String getId_order() {
-        return id_order;
+    public String getId() {
+        return id;
     }
 
-    public CustomerDTO getUser() {
-        return user;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public LocalDate getOrder_date() {
-        return order_date;
+    public CustomerDTO getCustomer() {
+        return customer;
     }
 
-    public List<SubscriptionDTO> getOrderDetail() {
-        return orderDetail;
+    public void setCustomer(CustomerDTO customer) {
+        this.customer = customer;
     }
 
-    public void setId_order(String id_order) {
-        this.id_order = id_order;
+    public List<SubscriptionDTO> getOrder_details() {
+        return order_details;
     }
 
-    public void setUser(CustomerDTO user) {
-        this.user = user;
+    public void setOrder_details(List<SubscriptionDTO> order_details) {
+        this.order_details = order_details;
     }
 
-    public void setOrder_date(LocalDate order_date) {
-        this.order_date = order_date;
+    public LocalDateTime getCreation_date() {
+        return creation_date;
     }
 
-    public void setOrderDetail(List<SubscriptionDTO> orderDetail) {
-        this.orderDetail = orderDetail;
+    public void setCreation_date(LocalDateTime creation_date) {
+        this.creation_date = creation_date;
+    }
+
+    public boolean isOpen() {
+        return open;
+    }
+
+    public void setOpen(boolean open) {
+        this.open = open;
+    }
+
+    //An order represents a preorder and users are able to change it until the 
+    //next Friday at 23:45h, when the order will be closed.
+    public boolean isModificationPossible() {
+        LocalDateTime nextFriday = creation_date.plusDays(4).withHour(23).withMinute(45);
+        return nextFriday.isBefore(LocalDateTime.now());
     }
     
+    public void checkOpen(){
+        this.open = isModificationPossible();
+    }
+
 }

@@ -27,6 +27,7 @@ CREATE TABLE product
 
 DROP TABLE if exists Subscription;
 Create table Subscription (
+    id Integer(255) AUTO_INCREMENT,
     quantity Number(255),
     sub_date DATE,
     product Varchar(255),
@@ -34,3 +35,12 @@ Create table Subscription (
     CONSTRAINT fk_sub_constumer FOREIGN KEY (customer) REFERENCES customer (id), 
     CONSTRAINT fk_prod_constumer FOREIGN KEY (product) REFERENCES product (id)
 );
+
+DROP TABLE if exists Order;
+Create table Order (
+    id VARCHAR(255) PRIMARY KEY,
+    order_details Interger(255),
+    creation_date DATE,
+    open boolean,
+    Contraint fk_order_sub FOREIGN KEY (order_details) REFERENCES Subscription (id)
+)
