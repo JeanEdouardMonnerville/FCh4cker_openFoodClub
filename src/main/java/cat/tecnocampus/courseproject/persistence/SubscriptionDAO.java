@@ -45,7 +45,7 @@ public class SubscriptionDAO implements cat.tecnocampus.courseproject.applicatio
     RowMapperImpl<SubscriptionDTO> subscriptionRowMapper
             = JdbcTemplateMapperFactory
                     .newInstance()
-                    .addKeys("customer,product")
+                    //.addKeys("customer,product")
                     .newRowMapper(SubscriptionDTO.class);
 
     @Override
@@ -55,7 +55,7 @@ public class SubscriptionDAO implements cat.tecnocampus.courseproject.applicatio
                     + " where s.customer=? ";
             return jdbcTemplate.query(query, subscriptionsRowMapper, customerId);
         } catch (EmptyResultDataAccessException e) {
-            throw  new SubscriptionDoesNotExistException(customerId);
+            throw new SubscriptionDoesNotExistException(customerId);
         }
     }
 
@@ -66,12 +66,15 @@ public class SubscriptionDAO implements cat.tecnocampus.courseproject.applicatio
 
     @Override
     public void addSubscription(String customerId, String productId, int quantity) {
-        if (subscriptionNotExists(customerId, productId)) {
-            String query = "INSERT INTO Subscription values (?,?,?,?)";
+        System.out.println(subscriptionNotExists(productId, customerId));
+        if (subscriptionNotExists(productId, customerId)) {
+            String query = "INSERT INTO Subscription(quantity,sub_date,customer,product) values (?,?,?,?)";
             jdbcTemplate.update(query, quantity, LocalDate.now(), customerId, productId);
+            System.out.println("INSERT################");
         } else {
             String query = "UPDATE Subscription SET quantity=?,sub_date=? where customer=? and product=?";
-            jdbcTemplate.update(query, quantity, LocalDate.now(), customerId);
+            jdbcTemplate.update(query, quantity, LocalDate.now(), customerId,productId);
+            System.out.println("UPDATE################");
         }
     }
 
@@ -86,12 +89,14 @@ public class SubscriptionDAO implements cat.tecnocampus.courseproject.applicatio
     }
 
     private boolean subscriptionNotExists(String productId, String customerId) {
-        String query = "Select * from subscription where product=? and customer=?";
-        SubscriptionDTO subscription = new SubscriptionDTO();
-        subscription = jdbcTemplate.queryForObject(query, subscriptionRowMapper, productId, customerId);
-        if (subscription == null) {
-            return true;
+        boolean result = true;
+        List<SubscriptionDTO> subsciptions = jdbcTemplate.query(query_base, subscriptionsAllRowMapper);
+        for(SubscriptionDTO s : subsciptions){
+            if(s.getCustomer().getId().equals(customerId) && s.getProduct().getId().equals(productId) ){
+                result=false;
+            }
         }
-        return false;
+        return result;
     }
+
 }
