@@ -50,10 +50,10 @@ public class ProductDAO implements cat.tecnocampus.courseproject.application.dao
     }
 
     @Override
-    public void updatePrice(String id) {
+    public void updatePrice(String id, long price) {
         String query = "UPDATE PRODUCT  set price=? where id=? ";
         try {
-            jdbctemplate.update(query, id);
+            jdbctemplate.update(query, price,id);
         } catch (EmptyResultDataAccessException e) {
             throw new ProductDoesNotExistException(id);
         }

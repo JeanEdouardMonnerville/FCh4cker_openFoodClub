@@ -25,32 +25,19 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class Controller {
 
-    private final RestTemplate restTemplate;
-    private static final String apiUrl = "https://productapi-1635325374837.azurewebsites.net";
 
     private CustomerDAO customerDAO;
     private SubscriptionDAO subscriptionDAO;
     private ProductDAO productDao;
 
     public Controller(RestTemplate restTemplate, CustomerDAO customerDAO, SubscriptionDAO subscriptionDAO, ProductDAO productDao) {
-        this.restTemplate = restTemplate;
+
         this.customerDAO = customerDAO;
         this.subscriptionDAO = subscriptionDAO;
         this.productDao = productDao;
     }
 
-    @Scheduled(cron = "0 0 ? * MON")
-    public double getNewPrice() {
-        double newPrice = 0;
-        List<ProductDTO> products = productDao.getAll();
-        var price = restTemplate.getForObject(apiUrl + "/api/v1/products/price", ProductDTO.class);
-        for (int i = 0; i < products.size(); i++) {
-            if (products.get(i).getId().equals(price.getId())) {
-                newPrice = price.getPrice();
-            }
-        }
-        return newPrice;
-    }
+
 
     public List<ProductDTO> getAllProducts() {
         return productDao.getAll();

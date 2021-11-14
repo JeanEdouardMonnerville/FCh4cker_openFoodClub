@@ -31,11 +31,11 @@ public class RESTController {
     public List<SubscriptionDTO> getSubscriptions() {
         return controller.getAllSubscription();
     }
-
+/*
     @GetMapping("/api/v1/products/price")
     public double getNewPrices() {
         return controller.getNewPrice();
-    }
+    }*/
 
     //@GetMapping("/User")
     //public CustomerDTO getCurrentCustomer(){

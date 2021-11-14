@@ -14,6 +14,16 @@ public class SubscriptionDTO {
     public SubscriptionDTO() {
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    
+
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
