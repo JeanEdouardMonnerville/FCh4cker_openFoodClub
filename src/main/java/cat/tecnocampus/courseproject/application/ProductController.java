@@ -11,8 +11,10 @@ import cat.tecnocampus.courseproject.application.dtos.productApi.ProductResponse
 import cat.tecnocampus.courseproject.application.dtos.productApi.ProductResponseUnit;
 import java.util.List;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+@Component
 public class ProductController {
 
     private final RestTemplate restTemplate;

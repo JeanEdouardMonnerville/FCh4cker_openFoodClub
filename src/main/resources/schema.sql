@@ -36,11 +36,11 @@ Create table Subscription (
     CONSTRAINT fk_prod_constumer FOREIGN KEY (product) REFERENCES product (id)
 );
 
-DROP TABLE if exists Order;
-Create table Order (
+DROP TABLE if exists t_Order;
+Create table t_Order (
     id VARCHAR(255) PRIMARY KEY,
-    order_details Interger(255),
-    creation_date DATE,
+    Subscriptions Integer(255),
+    creation_date TIMESTAMP,
     open boolean,
-    Contraint fk_order_sub FOREIGN KEY (order_details) REFERENCES Subscription (id)
+    Constraint fk_order_sub FOREIGN KEY (Subscriptions) REFERENCES Subscription (id)
 )

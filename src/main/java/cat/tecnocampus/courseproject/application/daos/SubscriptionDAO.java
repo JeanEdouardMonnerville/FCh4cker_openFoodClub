@@ -13,5 +13,6 @@ public interface SubscriptionDAO {
     public void addSubscription(String customerId, String productId, int quantity);
     
     public void deleteSubscription(String customerId, String productId);
+    public void updateQuantity(int idSubscription, int newQuantity);
     
 }

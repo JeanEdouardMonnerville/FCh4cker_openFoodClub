@@ -1,6 +1,7 @@
 package cat.tecnocampus.courseproject.api;
 
 import cat.tecnocampus.courseproject.application.Controller;
+import cat.tecnocampus.courseproject.application.SubscriptionOrderController;
 import cat.tecnocampus.courseproject.application.dtos.CustomerDTO;
 import cat.tecnocampus.courseproject.application.dtos.OrderDTO;
 import cat.tecnocampus.courseproject.application.dtos.ProductDTO;
@@ -16,42 +17,25 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class RESTController {
 
-    Controller controller;
+    Controller basicController;
+    SubscriptionOrderController SOcontroller;
 
-    public RESTController(Controller controller) {
-        this.controller = controller;
+    public RESTController(Controller controller, SubscriptionOrderController SOcontroller) {
+        this.basicController = controller;
+        this.SOcontroller = SOcontroller;
     }
 
     @GetMapping("/api/products")
     public List<ProductDTO> getProducts() {
-        return controller.getAllProducts();
+        return basicController.getAllProducts();
     }
 
     @GetMapping("/api/subscriptions")
     public List<SubscriptionDTO> getSubscriptions() {
-        return controller.getAllSubscription();
+        return basicController.getAllSubscription();
     }
-/*
-    @GetMapping("/api/v1/products/price")
-    public double getNewPrices() {
-        return controller.getNewPrice();
-    }*/
-
-    //@GetMapping("/User")
-    //public CustomerDTO getCurrentCustomer(){
-    //  return controller.getCustomerConnected();
-    //}
-    //@GetMapping("/User/{id}/Order")
-    // public OrderDTO getCurrentOrderOfACurrentUser(@PathVariable String id){
-    //   return controller.getCurrentOrderOfUser(id);
-    // }
-    /*
-     @PostMapping("/api/order/")
-     public void addOrder(@RequestBody OrderDTO order ){
-            controller.addOrder(order);
-     }
-     */
- /*
+    
+    /**
      @Param quantity : indicate the quantity of the product added. If no value
      entered, we will considerate quantity=1
      */
@@ -59,7 +43,15 @@ public class RESTController {
     public void addAProduct(@RequestParam String customerId,
             @RequestParam String productId,
             @RequestParam int quantity) {
-        controller.addProductOnSubscription(customerId, productId, quantity);
+        basicController.addProductOnSubscription(customerId, productId, quantity);
     }
+    
+    @GetMapping("api/orders/{id_customer}")
+    public List<OrderDTO> getMyOrders(@PathVariable String id_customer){
+        SOcontroller.creationOfAllOrders();
+        return SOcontroller.getOrderForCustomer(id_customer);
+        
+    }
+        
 
 }

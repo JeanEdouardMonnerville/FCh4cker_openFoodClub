@@ -61,15 +61,13 @@ public class SubscriptionDAO implements cat.tecnocampus.courseproject.applicatio
 
     @Override
     public void addSubscription(String customerId, String productId, int quantity) {
-        System.out.println(subscriptionNotExists(productId, customerId));
         if (subscriptionNotExists(productId, customerId)) {
             String query = "INSERT INTO Subscription(quantity,sub_date,customer,product) values (?,?,?,?)";
             jdbcTemplate.update(query, quantity, LocalDate.now(), customerId, productId);
-            System.out.println("INSERT################");
+
         } else {
             String query = "UPDATE Subscription SET quantity=?,sub_date=? where customer=? and product=?";
             jdbcTemplate.update(query, quantity, LocalDate.now(), customerId, productId);
-            System.out.println("UPDATE################");
         }
     }
 
@@ -101,6 +99,16 @@ public class SubscriptionDAO implements cat.tecnocampus.courseproject.applicatio
             return jdbcTemplate.queryForObject(query, subscriptionRowMapper, id);
         } catch (EmptyResultDataAccessException e) {
             throw new SubscriptionDoesNotExistException(id);
+        }
+    }
+
+    @Override
+    public void updateQuantity(int idSubscription, int newQuantity) {
+        String query = "Update subscription set quantity=? Where id=? ";
+        try {
+            jdbcTemplate.update(query, subscriptionRowMapper,newQuantity,idSubscription );
+        } catch (EmptyResultDataAccessException e) {
+            throw new SubscriptionDoesNotExistException(idSubscription);
         }
     }
 

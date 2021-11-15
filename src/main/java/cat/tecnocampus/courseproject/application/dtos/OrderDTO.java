@@ -3,6 +3,7 @@ package cat.tecnocampus.courseproject.application.dtos;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -10,7 +11,7 @@ public class OrderDTO {
 
     private String id;
     private CustomerDTO customer;
-    private List<SubscriptionDTO> order_details;
+    private List<SubscriptionDTO> subscriptions = new ArrayList<>();
     private LocalDateTime creation_date;
     private boolean open;
 
@@ -34,13 +35,15 @@ public class OrderDTO {
         this.customer = customer;
     }
 
-    public List<SubscriptionDTO> getOrder_details() {
-        return order_details;
+    public List<SubscriptionDTO> getSubscriptions() {
+        return subscriptions;
     }
 
-    public void setOrder_details(List<SubscriptionDTO> order_details) {
-        this.order_details = order_details;
+    public void setSubscriptions(List<SubscriptionDTO> subscriptions) {
+        this.subscriptions = subscriptions;
     }
+
+
 
     public LocalDateTime getCreation_date() {
         return creation_date;
@@ -62,7 +65,7 @@ public class OrderDTO {
     //next Friday at 23:45h, when the order will be closed.
     public boolean isModificationPossible() {
         LocalDateTime nextFriday = creation_date.plusDays(4).withHour(23).withMinute(45);
-        return nextFriday.isBefore(LocalDateTime.now());
+        return nextFriday.isAfter(LocalDateTime.now());
     }
     
     public void checkOpen(){
