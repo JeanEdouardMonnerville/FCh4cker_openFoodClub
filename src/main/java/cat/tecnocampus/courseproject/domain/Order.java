@@ -1,26 +1,25 @@
 package cat.tecnocampus.courseproject.domain;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.List;
+
 import java.util.UUID;
 
 public class Order {
 
     private String id;
+    private Product product;
     private Customer customer;
-    private List<Subscription> subscriptions;
-    private LocalDate creation_date;
-    private LocalDateTime creation_hour;
+    private LocalDateTime creation_date;
+    private int quantity;
     private boolean open;
 
-    public Order(Customer customer, List<Subscription> Subscriptions, LocalDate creation_date, boolean closed) {
+    public Order(Product product, Customer customer, LocalDateTime creation_date, int quantity, boolean open ) {
         this.id = UUID.randomUUID().toString();
+        this.product = product;
         this.customer = customer;
-        this.subscriptions = Subscriptions;
         this.creation_date = creation_date;
-        this.open = closed;
+        this.quantity = quantity;
+        this.open = open;
     }
 
     public String getId() {
@@ -31,6 +30,14 @@ public class Order {
         this.id = id;
     }
 
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
     public Customer getCustomer() {
         return customer;
     }
@@ -39,20 +46,20 @@ public class Order {
         this.customer = customer;
     }
 
-    public List<Subscription> getOrder_details() {
-        return subscriptions;
-    }
-
-    public void setOrder_details(List<Subscription> subscriptions) {
-        this.subscriptions = subscriptions;
-    }
-
-    public LocalDate getCreation_date() {
+    public LocalDateTime getCreation_date() {
         return creation_date;
     }
 
-    public void setCreation_date(LocalDate creation_date) {
+    public void setCreation_date(LocalDateTime creation_date) {
         this.creation_date = creation_date;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public boolean isOpen() {
@@ -62,5 +69,6 @@ public class Order {
     public void setOpen(boolean open) {
         this.open = open;
     }
+
 
 }

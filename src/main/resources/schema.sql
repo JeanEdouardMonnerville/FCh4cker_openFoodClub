@@ -39,8 +39,11 @@ Create table Subscription (
 DROP TABLE if exists t_Order;
 Create table t_Order (
     id VARCHAR(255) PRIMARY KEY,
-    Subscriptions Integer(255),
+    product Varchar(255),
+    customer Varchar(256),
     creation_date TIMESTAMP,
+    quantity integer(255),
     open boolean,
-    Constraint fk_order_sub FOREIGN KEY (Subscriptions) REFERENCES Subscription (id)
+    Constraint fk_customer_order FOREIGN KEY (customer) REFERENCES customer (id),
+    Constraint fk_product_order FOREIGN KEY (product) REFERENCES product (id)
 )

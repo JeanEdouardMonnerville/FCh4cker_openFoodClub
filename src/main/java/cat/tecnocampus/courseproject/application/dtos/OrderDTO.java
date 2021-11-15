@@ -1,18 +1,16 @@
 package cat.tecnocampus.courseproject.application.dtos;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class OrderDTO {
 
     private String id;
+    private ProductDTO product;
     private CustomerDTO customer;
-    private List<SubscriptionDTO> subscriptions = new ArrayList<>();
     private LocalDateTime creation_date;
+    private int quantity;
     private boolean open;
 
     public OrderDTO() {
@@ -27,6 +25,14 @@ public class OrderDTO {
         this.id = id;
     }
 
+    public ProductDTO getProduct() {
+        return product;
+    }
+
+    public void setProduct(ProductDTO product) {
+        this.product = product;
+    }
+
     public CustomerDTO getCustomer() {
         return customer;
     }
@@ -34,16 +40,6 @@ public class OrderDTO {
     public void setCustomer(CustomerDTO customer) {
         this.customer = customer;
     }
-
-    public List<SubscriptionDTO> getSubscriptions() {
-        return subscriptions;
-    }
-
-    public void setSubscriptions(List<SubscriptionDTO> subscriptions) {
-        this.subscriptions = subscriptions;
-    }
-
-
 
     public LocalDateTime getCreation_date() {
         return creation_date;
@@ -53,6 +49,14 @@ public class OrderDTO {
         this.creation_date = creation_date;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
     public boolean isOpen() {
         return open;
     }
@@ -60,6 +64,7 @@ public class OrderDTO {
     public void setOpen(boolean open) {
         this.open = open;
     }
+
 
     //An order represents a preorder and users are able to change it until the 
     //next Friday at 23:45h, when the order will be closed.
