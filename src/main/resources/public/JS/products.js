@@ -74,7 +74,7 @@ function insertProduct(Product) {
 
 function insertButton() {
   let textHtml = `        <div class="col-md-12">
-  <input type="button" value="Register my Subscription" id="validOrder">
+  <input type="button" value="Register my Subscription" id="validOrder" class="validationButtons">
 </div>`;
   $("#rowgrid").prepend(textHtml);
   

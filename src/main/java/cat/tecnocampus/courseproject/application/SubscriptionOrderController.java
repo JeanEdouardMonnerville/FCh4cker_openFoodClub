@@ -4,16 +4,12 @@ import cat.tecnocampus.courseproject.application.daos.CustomerDAO;
 import cat.tecnocampus.courseproject.application.daos.OrderDAO;
 import cat.tecnocampus.courseproject.application.daos.SubscriptionDAO;
 import cat.tecnocampus.courseproject.application.dtos.CustomerDTO;
-import cat.tecnocampus.courseproject.application.dtos.OrderDTO;
 import cat.tecnocampus.courseproject.application.dtos.SubscriptionDTO;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.time.Period;
-import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -31,22 +27,16 @@ public class SubscriptionOrderController {
         this.customerDao = customerDao;
     }
 
-    public List<OrderDTO> getOrderForCustomer(String customer_id) {
-        return orderDao.getOrdersByCustomerId(customer_id);
-    }
-
-
-
-    @Scheduled(cron = "0 0 ? * MON")
+    @Scheduled(cron = "0 0 2 * MON")// Every monday at 2h00am . 
     public void creationOfAllOrders() {
         List<CustomerDTO> customers = customerDao.getAllCustomer();
         for (CustomerDTO c : customers) {
             creationOfOneOrder(c.getId());
         }
     }
-    
+
     /**
-     * 
+     *
      * @param customer_id id of a customer.
      */
     private void creationOfOneOrder(String customer_id) {
@@ -57,9 +47,9 @@ public class SubscriptionOrderController {
             }
         }
     }
-    
+
     /**
-     * 
+     *
      * @param initial_date the initiale date contained by product informations.
      * @param num_of_periods the periodicy.
      * @param period can be equal to month, week or year.
@@ -67,13 +57,21 @@ public class SubscriptionOrderController {
      */
     private boolean checkPeriodicity(LocalDate initial_date, int num_of_periods, String period) {
         //I get the monday date of the current week
-        //LocalDate today = LocalDate.now().with(TemporalAdjusters.previous(DayOfWeek.MONDAY));
-        
-        LocalDate today = LocalDate.of(2021, 11, 22); //Test today to see if it works
-        
-        //I get the monday date of the initial week
-        LocalDate InitialeMonday = initial_date.with(TemporalAdjusters.previous(DayOfWeek.MONDAY));
-        
+        LocalDate today;
+        if (!initial_date.getDayOfWeek().equals(DayOfWeek.MONDAY)) {
+            today = LocalDate.now().with(TemporalAdjusters.previous(DayOfWeek.MONDAY));
+        } else {
+            today = LocalDate.now();
+        }
+
+        //today = LocalDate.of(2021, 11, 29); //Test today to see if it works
+        LocalDate InitialeMonday;
+        if (!initial_date.getDayOfWeek().equals(DayOfWeek.MONDAY)) //I get the monday date of the initial week
+        {
+            InitialeMonday = initial_date.with(TemporalAdjusters.previous(DayOfWeek.MONDAY));
+        } else {
+            InitialeMonday = initial_date;
+        }
         if (initial_date.isBefore(today)) {
             switch (period) {
                 case "Week":
@@ -81,7 +79,7 @@ public class SubscriptionOrderController {
 
                     //I calculate the number of days between the current monday date and the initial monday date
                     int weekBetweenInitialAndNow = Period.between(InitialeMonday, today).getDays() / 7;
-             
+
                     //If it equal the difference is equal to 0, that means that the current monday is equal to the initial monday
                     if (weekBetweenInitialAndNow != 0) //If the remainder of Euclidean division is equal to 0, we return true
                     {

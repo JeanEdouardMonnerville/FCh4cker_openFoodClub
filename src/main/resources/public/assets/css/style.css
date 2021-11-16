@@ -3,7 +3,7 @@
     height: 300px;
 }
 
-input#validOrder{
+.validationButtons{
     margin: 44px 28em;
     border-radius: 10px 10px 10px 10px;
     -webkit-border-radius: 10px 10px 10px 10px;
@@ -24,3 +24,15 @@ input#validOrder:hover{
     list-style: none;
   }
 
+  .order_list{
+    margin: 10px 10px;
+}
+
+.order_list li{
+    margin: 50px 20px;
+    padding: 10px 10px 10px 10px;
+    border: 0.2px solid grey;
+    display:-webkit-box;
+    left: 10em;
+    position: relative;
+}

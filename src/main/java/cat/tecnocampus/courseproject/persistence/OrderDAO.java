@@ -50,7 +50,7 @@ public class OrderDAO implements cat.tecnocampus.courseproject.application.daos.
     public OrderDTO getOneByID(String id) {
         try {
             String query = query_base + " Where o.id=?";
-            return jdbcTemplate.queryForObject(id, orderRowMapper, id);
+            return jdbcTemplate.queryForObject(query, orderRowMapper, id);
         } catch (EmptyResultDataAccessException e) {
             throw new OrderDoesNotExistException(id);
         }
@@ -83,8 +83,8 @@ public class OrderDAO implements cat.tecnocampus.courseproject.application.daos.
 
     @Override
     public void updateOrder(String order_id, int new_quantity) {
-        String query = "Update t_order set quantity=? where id=? ";
-        jdbcTemplate.update(query, new_quantity);
+        String query = "UPDATE T_Order SET quantity=? where id=?";
+        jdbcTemplate.update(query, new_quantity,order_id);
     }
 
     @Override
