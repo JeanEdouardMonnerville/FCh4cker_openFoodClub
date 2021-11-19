@@ -4,8 +4,19 @@ Create table Customer (
     name VARCHAR(255),
     secondName VARCHAR(255),
     email VARCHAR(255)
-   -- password VARCHAR(70) NOT NULL,
-    --enabled TINYINT NOT NULL DEFAULT 1
+    password VARCHAR(70) NOT NULL,
+    enabled TINYINT NOT NULL DEFAULT 1
+);
+
+DROP TABLE if exists AUTHORITIES;
+CREATE TABLE authorities
+(
+    authority_id int(11)     NOT NULL AUTO_INCREMENT,
+    username         varchar(45) NOT NULL,
+    role         varchar(45) NOT NULL,
+    PRIMARY KEY (authority_id),
+    UNIQUE KEY uni_username_role (role, username),
+    CONSTRAINT fk_username FOREIGN KEY (username) REFERENCES Customer (name)
 );
 
 DROP TABLE if exists product;

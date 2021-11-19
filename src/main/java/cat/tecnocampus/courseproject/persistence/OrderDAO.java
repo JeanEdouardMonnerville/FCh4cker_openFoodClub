@@ -71,7 +71,18 @@ public class OrderDAO implements cat.tecnocampus.courseproject.application.daos.
             throw new UserDoesNotExistException(customer_id);
         }
     }
-    
+
+    @Override
+    public List<OrderDTO> getOrderByCustomerName(String name) {
+        String query = query_base + " where c.name = ?";
+        try{
+            return jdbcTemplate.query(query,ordersRowMapper,name);
+        }
+        catch(EmptyResultDataAccessException e){
+            throw new UserDoesNotExistException(name);
+        }
+    }
+
     @Override
     public void createOrder(String product_id, String customer_id, LocalDateTime creation_date, int quantity) {
 

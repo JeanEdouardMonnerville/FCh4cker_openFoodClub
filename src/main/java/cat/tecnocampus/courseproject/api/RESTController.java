@@ -7,6 +7,7 @@ import cat.tecnocampus.courseproject.application.dtos.CustomerDTO;
 import cat.tecnocampus.courseproject.application.dtos.OrderDTO;
 import cat.tecnocampus.courseproject.application.dtos.ProductDTO;
 
+import java.security.Principal;
 import java.util.List;
 
 import cat.tecnocampus.courseproject.application.dtos.SubscriptionDTO;
@@ -52,10 +53,10 @@ public class RESTController {
         basicController.addProductOnSubscription(customerId, productId, quantity);
     }
 
-    @GetMapping("api/customers/orders/{id_customer}")
-    public List<OrderDTO> getMyOrders(@PathVariable String id_customer) {
+    @GetMapping("api/customers/orders")
+    public List<OrderDTO> getMyOrders(Principal principal) {
         //SOcontroller.creationOfAllOrders();//TEST LINE CODE
-        return orderController.getOrderForCustomer(id_customer);
+        return orderController.getOrderForCustomer(principal.getName());
 
     }
     

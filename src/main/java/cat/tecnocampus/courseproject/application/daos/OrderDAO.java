@@ -10,6 +10,7 @@ public interface OrderDAO {
     public OrderDTO getOneByID(String id);
     public List<OrderDTO> getAll();
     public List<OrderDTO> getOrdersByCustomerId(String customer_id);
+    public List<OrderDTO> getOrderByCustomerName(String name);
     
     public void createOrder(String product_id, String customer_id, LocalDateTime creation_date,int quantity);
     
