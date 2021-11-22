@@ -3,7 +3,7 @@ Create table Customer (
     id VARCHAR(256) PRIMARY KEY,
     name VARCHAR(255),
     secondName VARCHAR(255),
-    email VARCHAR(255)
+    email VARCHAR(255),
     password VARCHAR(70) NOT NULL,
     enabled TINYINT NOT NULL DEFAULT 1
 );
