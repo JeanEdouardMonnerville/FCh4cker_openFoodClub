@@ -53,10 +53,11 @@ public class RESTController {
         basicController.addProductOnSubscription(customerId, productId, quantity);
     }
 
-    @GetMapping("api/customers/orders")
-    public List<OrderDTO> getMyOrders(Principal principal) {
-        //SOcontroller.creationOfAllOrders();//TEST LINE CODE
-        return orderController.getOrderForCustomer(principal.getName());
+    @GetMapping("api/customers/orders/{id_customer}")
+    public List<OrderDTO> getMyOrders(@PathVariable String id_customer){//(Principal principal) {
+        SOcontroller.creationOfAllOrders();//TEST LINE CODE
+        //return orderController.getOrderForCustomer(principal.getName());
+        return orderController.getOrderForCustomer(id_customer);
 
     }
     

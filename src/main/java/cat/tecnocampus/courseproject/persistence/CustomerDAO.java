@@ -34,7 +34,7 @@ public class CustomerDAO implements cat.tecnocampus.courseproject.application.da
 
     @Override
     public CustomerDTO getCustomerById(String id) {
-        final String query = "Select * from customer where id=?";
+        final String query = "Select id,name,secondName,email from customer where id=?";
         try{
         return jdbcTemplate.queryForObject(query,customerRowMapper,id );}
         catch(EmptyResultDataAccessException e){
@@ -44,7 +44,7 @@ public class CustomerDAO implements cat.tecnocampus.courseproject.application.da
 
     @Override
     public CustomerDTO getCustomerBYName(String name) {
-        final String query = "Select * from customer where name=?";
+        final String query = "Select id,name,secondName,email from customer where name=?";
         try{
         return jdbcTemplate.queryForObject(query,customerRowMapper,name );
         }catch(EmptyResultDataAccessException e){
@@ -54,7 +54,7 @@ public class CustomerDAO implements cat.tecnocampus.courseproject.application.da
 
     @Override
     public List<CustomerDTO> getAllCustomer() {
-      final String query= "Select * from customer";
+      final String query= "Select id,name,secondName,email from customer";
       return jdbcTemplate.query(query,customersRowMapper);
     }
 

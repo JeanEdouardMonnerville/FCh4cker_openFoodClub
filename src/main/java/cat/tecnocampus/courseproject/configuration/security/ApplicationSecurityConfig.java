@@ -31,13 +31,13 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers( "/", "index", "/css/*", "/js/*", "/*.html", "/api/products").permitAll()
-                .antMatchers("api/customers/orders/id", "api/orders/id", "api/orders/delete/id").hasRole("CUSTOMER")
-                .antMatchers(HttpMethod.POST,"api/orders/update/id" ).hasRole("CUSTOMER") //.permitAll() //.hasRole("ADMIN")
-                .antMatchers("api/subscriptions", "api/orders/**").hasRole("ADMIN")
-                .antMatchers("api/orders/delete/**").hasAnyRole("CUSTOMER, ADMIN")
-                .anyRequest()
-                .authenticated()
+                .antMatchers( "/", "index", "/css/*", "/vendor/*", "/JS/*", "/assets/js/*", "/*.html", "/api/products","api/*").permitAll()
+                //.antMatchers("api/customers/orders/id", "api/orders/id", "api/orders/delete/id").hasRole("CUSTOMER")
+                //.antMatchers(HttpMethod.POST,"api/orders/update/id" ).hasRole("CUSTOMER") //.permitAll() //.hasRole("ADMIN")
+                //.antMatchers("api/subscriptions", "api/orders/**").hasRole("ADMIN")
+                //.antMatchers("api/orders/delete/**").hasAnyRole("CUSTOMER, ADMIN")
+                //.anyRequest()
+                //.authenticated()
 
                 .and()
                 //.addFilter(new JwtUsernamePasswordAuthenticationFilter(authenticationManager(), jwtConfig))
