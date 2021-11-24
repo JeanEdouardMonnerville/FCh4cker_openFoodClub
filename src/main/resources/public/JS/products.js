@@ -2,14 +2,27 @@ const listProducts = $("#rowgrid");
 const urlProducts = "http://localhost:8080/api/products";
 const urlSubsription = "http://localhost:8080/api/subscription";
 
-const currentUser = {
-  id: "1",
-  name: "Pepe",
-  secondname: "Gimenez",
-  role: "USER"
-};
+let currentUser = {};
 
+/*  Get the current User*/
+getCurrentUser();
 
+function getCurrentUser() {
+  $.ajax({
+    headers: { 'Authorization': localStorage.getItem('token') },
+    url: "http://localhost:8080/api/customers/me",
+    type: 'GET',
+    dataType: 'json',
+    success: function (data) {
+      currentUser = data;
+      console.log(data);
+    },
+    error: function () {
+      window.location.href = "http://localhost:8080/login-form-17/login_form.html";
+    },
+
+  });
+}
 
 
 function validSubscriptionButtonFunction(event) {
@@ -24,6 +37,7 @@ function validSubscriptionButtonFunction(event) {
       //$.post(urlSubsription, {customerId:user, productId:newId, quantity:newValue},function (result){},"json");
 
       $.ajax({
+        headers: { 'Authorization': localStorage.getItem('token') },
         type: "POST",
         url: urlSubsription + `?customerId=${user}&productId=${newId}&quantity=${newValue}`,
         contentType: "application/json"
@@ -37,14 +51,24 @@ function validSubscriptionButtonFunction(event) {
 getProducts();
 
 function getProducts() {
-  $.get(urlProducts, function (data) {
-    for (let d of data) {
-      insertProduct(d);
+  $.ajax({
+    headers: { 'Authorization': localStorage.getItem('token') },
+    url: urlProducts,
+    type: "GET",
+    contentType: "application/json",
+    success: function (data) {
+      for (let d of data) {
+        insertProduct(d);
+      }
+      insertButton();
+      //  insertCopyright();
+    },
+    error: function () {
+      window.location.href = "http://localhost:8080/login-form-17/login_form.html";
     }
-    insertButton();
-    //  insertCopyright();
   })
 }
+
 
 function insertProduct(Product) {
   let newHtmlText = `
@@ -77,7 +101,7 @@ function insertButton() {
   <input type="button" value="Register my Subscription" id="validOrder" class="validationButtons">
 </div>`;
   $("#rowgrid").prepend(textHtml);
-  
+
   $("#validOrder").click(validSubscriptionButtonFunction);
 }
 
@@ -98,3 +122,16 @@ function insertCopyright() {
   $("#bodyProductPage").append(textHtml);
   //$("#productFiltercontent").append(textHtml);
 }
+/* TEST
+function getSubscription(){
+  $.ajax({
+    headers: { 'Authorization': localStorage.getItem('token') },
+    url: "http://localhost:8080/api/subscriptions",
+    type: "GET",
+    contentType: "application/json",
+    success: function (data) {
+      console.log(data);
+    },
+
+  })
+}*/

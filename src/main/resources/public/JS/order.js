@@ -1,17 +1,12 @@
 const order_list = $("#oder_list_id");
 const validationButton = $("#modifyMyCurrentOrder");
-const urlGetOrder = "http://localhost:8080/api/customers/orders";//+customerID
+const urlGetOrder = "http://localhost:8080/api/customers/orders/me";
 const urlDeleteOrder = "http://localhost:8080/api/orders/delete";//+orderID
 const urlUpdateOrder = "http://localhost:8080/api/orders/update";//+orderID
 
 
 
-const currentUser = {
-    id: "1",
-    name: "Pepe",
-    secondname: "Gimenez",
-    role: "USER"
-};
+
 
 // Start function
 getOrder();
@@ -20,19 +15,28 @@ getOrder();
 validationButton.click(updateOrder);
 
 function getOrder() {
-    $.get(urlGetOrder + "/" + currentUser.id, function (data) {
-        for (d of data) {
-            if (d.open) {
-                insertOrderOpen(d);
-            }
-            else {
-                insertOrderClosed(d);
-                hideValidationButton();
-            }
+    $.ajax({
+        headers: { 'Authorization': localStorage.getItem('token') },
+        url: urlGetOrder,
+        contentType: "application/json",
+        type: "GET",
+        success: function (data) {
+            for (d of data) {
+                if (d.open) {
+                    insertOrderOpen(d);
+                }
+                else {
+                    insertOrderClosed(d);
+                    hideValidationButton();
+                }
 
-        }
-        if (data.length == 0) {
-            order_list.append(`<h1 id = "NoOrderAvailable">You have not order for the moment</h1>`);
+            }
+            if (data.length == 0) {
+                order_list.append(`<h1 id = "NoOrderAvailable">You have not order for the moment</h1>`);
+            }
+        },
+        error: function () {
+            window.location.href = "http://localhost:8080/login-form-17/login_form.html";
         }
     })
 }
@@ -94,9 +98,9 @@ function updateOrder() {
     for (let p of products) {
         let newValue = p.valueAsNumber;
         if (p.valueAsNumber > 0) {
-            let user = currentUser.id;
 
             $.ajax({
+                headers: { 'Authorization': localStorage.getItem('token') },
                 type: "POST",
                 url: urlUpdateOrder + `/${p.id}?quantity=${newValue}`,
                 contentType: "application/json"
@@ -104,6 +108,7 @@ function updateOrder() {
         }
         if (p.valueAsNumber == 0) {
             $.ajax({
+                headers: { 'Authorization': localStorage.getItem('token') },
                 type: "GET",
                 url: urlDeleteOrder + `/${p.id}`,
                 contentType: "application/json"

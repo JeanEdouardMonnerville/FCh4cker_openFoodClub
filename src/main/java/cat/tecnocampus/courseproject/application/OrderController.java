@@ -18,24 +18,37 @@ public class OrderController {
         return orderDao.getAll();
     }
 
-    public List<OrderDTO> getOrderForCustomer(String customer_id) {
+    public List<OrderDTO> getOrderForCustomerById(String customer_id) {
         return orderDao.getOrdersByCustomerId(customer_id);
+    }
+
+    public List<OrderDTO> getOrderForCustomerByName(String customer_name) {
+        return orderDao.getOrderByCustomerName(customer_name);
     }
 
     public OrderDTO getOrderById(String id_order) {
         return orderDao.getOneByID(id_order);
     }
 
-    public void updateQuantityOneOrder(String id_order, int quantity) {
+    public void updateQuantityOneOrder(String id_order, int quantity, String customer_name) {
         OrderDTO order = getOrderById(id_order);
-        order.checkOpen();
-        if (order.isOpen()) {
-            orderDao.updateOrder(id_order, quantity);
+        if (order.getCustomer().getName().equals(customer_name)) {
+            order.checkOpen();
+            if (order.isOpen()) {
+                orderDao.updateOrder(id_order, quantity);
+            }
         }
     }
 
-    public void deleteOrder(String id_order) {
-        orderDao.deleteOrder(id_order);
+    public void deleteOrder(String id_order, String customer_name) {
+        OrderDTO order = getOrderById(id_order);
+        if (order.getCustomer().getName().equals(customer_name)) {
+            orderDao.deleteOrder(id_order);
+        }
+    }
+
+    public void updateQuantityOneOrderForAdmin(String id_order, int quantity) {
+        orderDao.updateOrder(id_order, quantity);
     }
 
 }

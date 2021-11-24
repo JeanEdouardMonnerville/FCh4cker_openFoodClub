@@ -28,6 +28,21 @@ public class RESTController {
         this.SOcontroller = SOcontroller;
         this.orderController= orderController;
     }
+    
+    @GetMapping("/api/customers")
+    public List<CustomerDTO> getCustomers(){
+        return basicController.getCustomers();
+    }
+    
+    @GetMapping("/api/customers/{id_customer}")
+    public CustomerDTO getCustomerById(@PathVariable String id_customer){
+        return basicController.getCustomer(id_customer);
+    }
+    
+    @GetMapping("/api/customers/me")
+    public CustomerDTO getCurrentCustomer(Principal principal){
+        return basicController.getCustomerByName(principal.getName());
+    }
 
     @GetMapping("/api/products")
     public List<ProductDTO> getProducts() {
@@ -53,12 +68,10 @@ public class RESTController {
         basicController.addProductOnSubscription(customerId, productId, quantity);
     }
 
-    @GetMapping("api/customers/orders/{id_customer}")
-    public List<OrderDTO> getMyOrders(@PathVariable String id_customer){//(Principal principal) {
-        SOcontroller.creationOfAllOrders();//TEST LINE CODE
-        //return orderController.getOrderForCustomer(principal.getName());
-        return orderController.getOrderForCustomer(id_customer);
-
+    @GetMapping("api/customers/orders/me")
+    public List<OrderDTO> getMyOrders(Principal principal) {
+        //SOcontroller.creationOfAllOrders();//TEST LINE CODE
+        return orderController.getOrderForCustomerByName(principal.getName());
     }
     
     @GetMapping("api/orders/{id_order}")
@@ -67,13 +80,18 @@ public class RESTController {
     }
     
     @PostMapping("api/orders/update/{id_order}")
-    public void updateOrderQuantity(@PathVariable String id_order,@RequestParam int quantity){
-        orderController.updateQuantityOneOrder(id_order, quantity);
+    public void updateOrderQuantity(@PathVariable String id_order,@RequestParam int quantity,Principal principal){
+        orderController.updateQuantityOneOrder(id_order, quantity, principal.getName());
+    }
+    
+    @PostMapping("api/orders/admin/update/{id_order}")
+    public void updateOrderQuantityForAdmin(@PathVariable String id_order,@RequestParam int quantity){
+        orderController.updateQuantityOneOrderForAdmin(id_order, quantity);
     }
     
     @GetMapping("api/orders/delete/{id_order}")
-    public void deleteAnOrder(@PathVariable String id_order){
-        orderController.deleteOrder(id_order);
+    public void deleteAnOrder(@PathVariable String id_order,Principal principal){
+        orderController.deleteOrder(id_order, principal.getName());
     }
     
     @GetMapping("api/orders/all")
