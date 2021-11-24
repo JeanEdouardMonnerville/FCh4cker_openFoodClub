@@ -1,0 +1,12 @@
+#submit{
+    border: 0;
+    width: 90%;
+    border-radius: 10px 10px 10px 10px; 
+    margin: 8px 0px 0px 15px; 
+    background: linear-gradient(#dc3545, #e83e8c);
+    color: #fff;
+}
+
+#submit:hover{
+  background: linear-gradient(#e83e8c,#dc3545 );
+}
