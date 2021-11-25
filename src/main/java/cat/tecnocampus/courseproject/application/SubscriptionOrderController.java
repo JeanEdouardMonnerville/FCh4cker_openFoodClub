@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
+
+import cat.tecnocampus.courseproject.application.mails.MailSender;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -21,10 +23,13 @@ public class SubscriptionOrderController {
     private OrderDAO orderDao;
     private CustomerDAO customerDao;
 
-    public SubscriptionOrderController(SubscriptionDAO subscriptiondao, OrderDAO orderDao, CustomerDAO customerDao) {
+    private MailSender mailSender;
+
+    public SubscriptionOrderController(SubscriptionDAO subscriptiondao, OrderDAO orderDao, CustomerDAO customerDao, MailSender mailSender) {
         this.subscriptiondao = subscriptiondao;
         this.orderDao = orderDao;
         this.customerDao = customerDao;
+        this.mailSender = mailSender;
     }
 
     @Scheduled(cron = "0 0 2 * MON")// Every monday at 2h00am . 
@@ -44,6 +49,7 @@ public class SubscriptionOrderController {
         for (SubscriptionDTO s : subscriptions) {
             if (checkPeriodicity(s.getProduct().getInitial_date(), s.getProduct().getNum_of_periods(), s.getProduct().getPeriod())) {
                 orderDao.createOrder(s.getProduct().getId(), customer_id, LocalDateTime.now(), s.getQuantity());
+                mailSender.sendMessage();
             }
         }
     }
