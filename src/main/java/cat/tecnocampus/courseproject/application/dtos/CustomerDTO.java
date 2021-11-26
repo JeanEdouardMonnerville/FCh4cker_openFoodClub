@@ -2,6 +2,7 @@ package cat.tecnocampus.courseproject.application.dtos;
 
 
 
+import java.util.List;
 import java.util.UUID;
 
 
@@ -10,6 +11,7 @@ public class CustomerDTO {
     private String name;
     private String secondName;
     private String email;
+    private List<String> roles;
 
 
     public CustomerDTO() {
@@ -30,6 +32,14 @@ public class CustomerDTO {
 
     public String getEmail() {
         return email;
+    }
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
     }
 
 

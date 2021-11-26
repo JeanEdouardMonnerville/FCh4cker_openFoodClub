@@ -25,7 +25,6 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class Controller {
 
-
     private CustomerDAO customerDAO;
     private SubscriptionDAO subscriptionDAO;
     private ProductDAO productDao;
@@ -36,8 +35,6 @@ public class Controller {
         this.subscriptionDAO = subscriptionDAO;
         this.productDao = productDao;
     }
-
-
 
     public List<ProductDTO> getAllProducts() {
         return productDao.getAll();
@@ -85,6 +82,11 @@ public class Controller {
         subscriptions.add(subscriptionDTOToSubscription(subscriptionDTO));*/
         subscriptionDAO.addSubscription(customerId, productId, quantity);
 
+    }
+
+    public List<SubscriptionDTO> getSubscriptionsForCustomer(String name) {
+        CustomerDTO customer = customerDAO.getCustomerBYName(name);
+        return subscriptionDAO.getSubscription(customer.getId());
     }
 
     /**
@@ -151,4 +153,5 @@ public class Controller {
         customer.setSecondName(customerdto.getSecondName());
         return customer;
     }
+
 }

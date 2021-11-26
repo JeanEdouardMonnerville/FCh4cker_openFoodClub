@@ -34,9 +34,12 @@ public class CustomerDAO implements cat.tecnocampus.courseproject.application.da
 
     @Override
     public CustomerDTO getCustomerById(String id) {
-        final String query = "Select id,name,secondName,email from customer where id=?";
+        final String query = "Select id,name,secondName,email,role as roles from customer"
+                + " inner join authorities on authorities.username=name where id=?";
         try{
-        return jdbcTemplate.queryForObject(query,customerRowMapper,id );}
+        List<CustomerDTO> result = jdbcTemplate.query(query,customerRowMapper,id );
+        return result.get(0);
+        }
         catch(EmptyResultDataAccessException e){
             throw new UserDoesNotExistException(id);
         }
@@ -44,9 +47,11 @@ public class CustomerDAO implements cat.tecnocampus.courseproject.application.da
 
     @Override
     public CustomerDTO getCustomerBYName(String name) {
-        final String query = "Select id,name,secondName,email from customer where name=?";
+        final String query = "Select id,name,secondName,email,role as roles from customer"
+                + " inner join authorities on authorities.username=name where name=?";
         try{
-        return jdbcTemplate.queryForObject(query,customerRowMapper,name );
+        List<CustomerDTO> result = jdbcTemplate.query(query, customersRowMapper,name);
+        return result.get(0);
         }catch(EmptyResultDataAccessException e){
             throw new UserDoesNotExistException(name);
         }
@@ -54,7 +59,8 @@ public class CustomerDAO implements cat.tecnocampus.courseproject.application.da
 
     @Override
     public List<CustomerDTO> getAllCustomer() {
-      final String query= "Select id,name,secondName,email from customer";
+      final String query= "Select id,name,secondName,email,role as roles from customer"
+              + " inner join authorities on authorities.username=name";
       return jdbcTemplate.query(query,customersRowMapper);
     }
 

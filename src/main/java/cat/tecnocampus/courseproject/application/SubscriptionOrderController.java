@@ -70,7 +70,7 @@ public class SubscriptionOrderController {
             today = LocalDate.now();
         }
 
-        //today = LocalDate.of(2021, 11, 29); //Test today to see if it works
+        //today = LocalDate.of(2021, 12, 6); //Test today to see if it works
         LocalDate InitialeMonday;
         if (!initial_date.getDayOfWeek().equals(DayOfWeek.MONDAY)) //I get the monday date of the initial week
         {

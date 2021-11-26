@@ -33,6 +33,22 @@ input#validOrder:hover{
     padding: 10px 10px 10px 10px;
     border: 0.2px solid grey;
     display:-webkit-box;
-    left: 10em;
     position: relative;
+    left: 10em;
+    width: 80% ;
 }
+
+.order_list li div{
+    margin: 10px 10px;
+}
+
+
+.order_product_image{
+    width: 150px;
+    height: 150px;
+}
+
+input[type="number"]{
+    width:44%;
+    margin-bottom: 10px;
+ }

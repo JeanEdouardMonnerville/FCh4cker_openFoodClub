@@ -23,24 +23,24 @@ public class RESTController {
     SubscriptionOrderController SOcontroller;
     OrderController orderController;
 
-    public RESTController(Controller controller, SubscriptionOrderController SOcontroller,OrderController orderController) {
+    public RESTController(Controller controller, SubscriptionOrderController SOcontroller, OrderController orderController) {
         this.basicController = controller;
         this.SOcontroller = SOcontroller;
-        this.orderController= orderController;
+        this.orderController = orderController;
     }
-    
-    @GetMapping("/api/customers")
-    public List<CustomerDTO> getCustomers(){
+
+    @GetMapping("/api/customers/all")
+    public List<CustomerDTO> getCustomers() {
         return basicController.getCustomers();
     }
-    
+
     @GetMapping("/api/customers/{id_customer}")
-    public CustomerDTO getCustomerById(@PathVariable String id_customer){
+    public CustomerDTO getCustomerById(@PathVariable String id_customer) {
         return basicController.getCustomer(id_customer);
     }
-    
+
     @GetMapping("/api/customers/me")
-    public CustomerDTO getCurrentCustomer(Principal principal){
+    public CustomerDTO getCurrentCustomer(Principal principal) {
         return basicController.getCustomerByName(principal.getName());
     }
 
@@ -52,6 +52,11 @@ public class RESTController {
     @GetMapping("/api/subscriptions")
     public List<SubscriptionDTO> getSubscriptions() {
         return basicController.getAllSubscription();
+    }
+
+    @GetMapping("/api/subscriptions/me")
+    public List<SubscriptionDTO> getMySubscriptions(Principal principal) {
+        return basicController.getSubscriptionsForCustomer(principal.getName());
     }
 
     /**
@@ -73,29 +78,29 @@ public class RESTController {
         //SOcontroller.creationOfAllOrders();//TEST LINE CODE
         return orderController.getOrderForCustomerByName(principal.getName());
     }
-    
+
     @GetMapping("api/orders/{id_order}")
-    public OrderDTO getOrderByID(@PathVariable String id_order){
+    public OrderDTO getOrderByID(@PathVariable String id_order) {
         return orderController.getOrderById(id_order);
     }
-    
+
     @PostMapping("api/orders/update/{id_order}")
-    public void updateOrderQuantity(@PathVariable String id_order,@RequestParam int quantity,Principal principal){
+    public void updateOrderQuantity(@PathVariable String id_order, @RequestParam int quantity, Principal principal) {
         orderController.updateQuantityOneOrder(id_order, quantity, principal.getName());
     }
-    
+
     @PostMapping("api/orders/admin/update/{id_order}")
-    public void updateOrderQuantityForAdmin(@PathVariable String id_order,@RequestParam int quantity){
+    public void updateOrderQuantityForAdmin(@PathVariable String id_order, @RequestParam int quantity) {
         orderController.updateQuantityOneOrderForAdmin(id_order, quantity);
     }
-    
+
     @GetMapping("api/orders/delete/{id_order}")
-    public void deleteAnOrder(@PathVariable String id_order,Principal principal){
+    public void deleteAnOrder(@PathVariable String id_order, Principal principal) {
         orderController.deleteOrder(id_order, principal.getName());
     }
-    
+
     @GetMapping("api/orders/all")
-    public List<OrderDTO> getAllOrders(){
+    public List<OrderDTO> getAllOrders() {
         return orderController.getAllOrders();
     }
 

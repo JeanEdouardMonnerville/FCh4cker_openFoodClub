@@ -39,12 +39,12 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 //Customer
                 .antMatchers("/api/customers/me", "api/customers/orders/me").hasRole("CUSTOMER")
                 .antMatchers(HttpMethod.POST, "/api/subscription").hasRole("CUSTOMER")
-                .antMatchers(HttpMethod.POST, "api/orders/update/*").hasRole("CUSTOMER")
+                .antMatchers(HttpMethod.POST, "api/orders/update/**").hasRole("CUSTOMER")
                 //admin
-                .antMatchers("/api/customers", "/api/customers/*", "/api/subscriptions", "api/orders/*", "api/orders/all").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "api/orders/admin/update/*").hasRole("ADMIN")
+                .antMatchers("/api/customers/all", "/api/customers/*", "/api/subscriptions", "api/orders/*", "api/orders/all").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "api/orders/admin/update/**").hasRole("ADMIN")
                 //Customer and admin
-                .antMatchers("api/orders/delete/**", "/api/products", "products.html"/*",/api/subscriptions"*//*TEST*/).hasAnyRole("CUSTOMER, ADMIN")
+                .antMatchers("api/orders/delete/**", "/api/products","/api/subscriptions/me").hasAnyRole("CUSTOMER, ADMIN")
                 .antMatchers(HttpMethod.POST, "api/orders/delete/*").hasAnyRole("CUSTOMER, ADMIN")
                 .anyRequest()
                 .authenticated()

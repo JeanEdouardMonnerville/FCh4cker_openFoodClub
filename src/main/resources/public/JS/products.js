@@ -122,11 +122,11 @@ function insertCopyright() {
   $("#bodyProductPage").append(textHtml);
   //$("#productFiltercontent").append(textHtml);
 }
-/* TEST
+//TEST
 function getSubscription(){
   $.ajax({
     headers: { 'Authorization': localStorage.getItem('token') },
-    url: "http://localhost:8080/api/subscriptions",
+    url: "http://localhost:8080/api/subscriptions/me",
     type: "GET",
     contentType: "application/json",
     success: function (data) {
@@ -134,4 +134,4 @@ function getSubscription(){
     },
 
   })
-}*/
+}
