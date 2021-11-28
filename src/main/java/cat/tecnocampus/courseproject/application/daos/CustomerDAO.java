@@ -12,5 +12,7 @@ public interface CustomerDAO {
     
     public List<CustomerDTO> getAllCustomer();
     
+    public void updateCustomer(CustomerDTO customer);
+    
     
 }

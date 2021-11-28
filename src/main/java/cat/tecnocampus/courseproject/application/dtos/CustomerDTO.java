@@ -11,7 +11,7 @@ public class CustomerDTO {
     private String name;
     private String secondName;
     private String email;
-    private List<String> roles;
+    private List<AutoritiesDTO> roles;
 
 
     public CustomerDTO() {
@@ -34,13 +34,7 @@ public class CustomerDTO {
         return email;
     }
 
-    public List<String> getRoles() {
-        return roles;
-    }
 
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
-    }
 
 
 
@@ -58,6 +52,14 @@ public class CustomerDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<AutoritiesDTO> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<AutoritiesDTO> roles) {
+        this.roles = roles;
     }
 
     

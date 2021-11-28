@@ -4,19 +4,21 @@
 }
 
 .validationButtons{
-    margin: 44px 28em;
+    margin: 44px 33em;
     border-radius: 10px 10px 10px 10px;
     -webkit-border-radius: 10px 10px 10px 10px;
     -moz-border-radius: 10px 10px 10px 10px;
     -ms-border-radius: 10px 10px 10px 10px;
     -o-border-radius: 10px 10px 10px 10px;
     cursor: pointer;
-    background-color: #F33F3F;
+    
+    background: linear-gradient(#F33F3F,red);
+    border: 0;
 }
 
-input#validOrder:hover{
-    background-color: black;
-    color: #F33F3F;
+.validationButtons:hover{
+    background: linear-gradient(red,#F33F3F);
+    color: #E0E0E0;
 }
 
 .down-content{
@@ -52,3 +54,18 @@ input[type="number"]{
     width:44%;
     margin-bottom: 10px;
  }
+
+ .NoOrderAvailableAdmin{
+    font-size: 1.5em;
+    margin: 50px 200px; 
+        
+}
+
+.customer_name_title{
+    margin : 20px 10px 20px 0px;
+    border-bottom: solid bisque;
+}
+
+.order_customer_container{
+    margin: 10px 10px 10px 50px;
+}

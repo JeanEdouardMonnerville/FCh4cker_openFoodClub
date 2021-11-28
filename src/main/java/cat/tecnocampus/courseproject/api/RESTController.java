@@ -72,6 +72,11 @@ public class RESTController {
             @RequestParam int quantity) {
         basicController.addProductOnSubscription(customerId, productId, quantity);
     }
+    
+    @GetMapping("api/customers/orders/{id_customer}")
+    public List<OrderDTO> getOrderForCustomer(@PathVariable String id_customer){
+        return orderController.getOrderForCustomerById(id_customer);
+    }
 
     @GetMapping("api/customers/orders/me")
     public List<OrderDTO> getMyOrders(Principal principal) {
