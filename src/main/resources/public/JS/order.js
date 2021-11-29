@@ -40,6 +40,7 @@ validationButton.click(updateOrder);
 
 function getOrder() {
     let roles = [];
+    console.log(currentUser);
     for(let autorities of currentUser.roles){
         roles.push(autorities.role);
     }
@@ -67,7 +68,7 @@ function getOrder() {
                     hideValidationButton();
                 }
                 if (data.length == 0) {
-                    order_list.append(`<h1 id = "NoOrderAvailable">You have not order for the moment</h1>`);
+                    //order_list.append(`<h1 id = "NoOrderAvailable">You have not order for the moment</h1>`);
                 }
             },
             error: function () {

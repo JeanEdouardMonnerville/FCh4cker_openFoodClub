@@ -37,14 +37,14 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/*.html", "/*.css", "/*.min.css", "/*.js", "/*.bundle.min.js", "/*.min.js", "/*","/h2-console/**").permitAll()
                 .antMatchers("/vendor/**", "/assets/**", "*/JS/**", "/JS/order.js", "/JS/products.js","/JS/about.js" ,"/login-form-17/**").permitAll()
                 //Customer
-                .antMatchers("/api/customers/me", "api/customers/orders/me").hasRole("CUSTOMER")
+                .antMatchers("api/customers/orders/me").hasRole("CUSTOMER")
                 .antMatchers(HttpMethod.POST, "/api/subscription").hasRole("CUSTOMER")
                 .antMatchers(HttpMethod.POST, "api/orders/update/**").hasRole("CUSTOMER")
                 //admin
                 .antMatchers("/api/customers/all", "/api/customers/*", "/api/subscriptions", "api/orders/*", "api/orders/all","api/customers/orders/*").hasRole("ADMIN")
                 .antMatchers(HttpMethod.POST, "api/orders/admin/update/**").hasRole("ADMIN")
                 //Customer and admin
-                .antMatchers("api/orders/delete/**", "/api/products","/api/subscriptions/me").hasAnyRole("CUSTOMER, ADMIN")
+                .antMatchers("/api/customers/me","api/orders/delete/**", "/api/products","/api/subscriptions/me").hasAnyRole("CUSTOMER, ADMIN")
                 .antMatchers(HttpMethod.POST, "api/orders/delete/*").hasAnyRole("CUSTOMER, ADMIN")
                 .anyRequest()
                 .authenticated()
