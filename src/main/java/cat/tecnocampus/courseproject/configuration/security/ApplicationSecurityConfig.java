@@ -41,7 +41,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/api/subscription").hasRole("CUSTOMER")
                 .antMatchers(HttpMethod.POST, "api/orders/update/**").hasRole("CUSTOMER")
                 //admin
-                .antMatchers("/api/customers/all", "/api/customers/*", "/api/subscriptions", "api/orders/*", "api/orders/all","api/customers/orders/*").hasRole("ADMIN")
+                .antMatchers("/api/customers/all", "/api/subscriptions", "api/orders/*", "api/orders/all","api/customers/orders/*").hasRole("ADMIN")
                 .antMatchers(HttpMethod.POST, "api/orders/admin/update/**").hasRole("ADMIN")
                 //Customer and admin
                 .antMatchers("/api/customers/me","api/orders/delete/**", "/api/products","/api/subscriptions/me").hasAnyRole("CUSTOMER, ADMIN")
