@@ -1,6 +1,9 @@
 const listProducts = $("#rowgrid");
 const urlProducts = "http://localhost:8080/api/products";
 const urlSubsription = "http://localhost:8080/api/subscription";
+const urlLogin = "http://localhost:8080/login-form-17/login_form.html";
+const urlCustomerDetails = "http://localhost/about.html";
+const urlMeSubscription = "http://localhost:8080/api/subscriptions/me";
 
 let currentUser = {};
 
@@ -18,7 +21,7 @@ function getCurrentUser() {
       console.log(data);
     },
     error: function () {
-      window.location.href = "http://localhost:8080/login-form-17/login_form.html";
+      window.location.href = urlLogin;
     },
 
   });
@@ -40,7 +43,10 @@ function validSubscriptionButtonFunction(event) {
         headers: { 'Authorization': localStorage.getItem('token') },
         type: "POST",
         url: urlSubsription + `?customerId=${user}&productId=${newId}&quantity=${newValue}`,
-        contentType: "application/json"
+        contentType: "application/json",
+        success : function(){
+          window.location.href = urlCustomerDetails;
+        }
       });
     }
   }
@@ -64,7 +70,7 @@ function getProducts() {
       //  insertCopyright();
     },
     error: function () {
-      window.location.href = "http://localhost:8080/login-form-17/login_form.html";
+      window.location.href = urlLogin;
     }
   })
 }
@@ -126,7 +132,7 @@ function insertCopyright() {
 function getSubscription(){
   $.ajax({
     headers: { 'Authorization': localStorage.getItem('token') },
-    url: "http://localhost:8080/api/subscriptions/me",
+    url: urlMeSubscription,
     type: "GET",
     contentType: "application/json",
     success: function (data) {
