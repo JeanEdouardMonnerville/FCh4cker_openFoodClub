@@ -89,7 +89,7 @@ function insertProduct(Product) {
         Suppliers : ${Product.provider}<br>
         VAT : ${Product.vat_type}<br>
         </p>
-        <input type="number" id=${Product.id} class="productquantity" value=0>
+        <input type="number" id=${Product.id} class="productquantity" value=0 min=0>
       </div>
     </div>
   </div>`;

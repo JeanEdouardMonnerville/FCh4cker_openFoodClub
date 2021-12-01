@@ -72,3 +72,6 @@ input[type="number"]{
 .order_customer_container{
     margin: 10px 10px 10px 50px;
 }
+#divMySubscriptions{
+margin: auto;
+}

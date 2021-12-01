@@ -47,7 +47,7 @@ function insertSubscription(subscription) {
     let textHtml = `
 <div id="subscriptionContainer">
 
-    <div id="dateSusbription>
+    <div id="dateSusbription">
       ${subscription.sub_date}
     </div>
     <div id = "imageSubscription">
@@ -55,13 +55,14 @@ function insertSubscription(subscription) {
       onerror="if (this.src != 'error.jpg') this.src = 'https://i2.wp.com/germandebonis.com/wp-content/uploads/2016/09/cesta-llena-de-verduras_1112-316.jpg?w=895';">    
     </div>
     <div id="nameSubscription">
-        ${subscription.product.name}
+       <span>${subscription.product.name}</span> 
     </div>
+    
     <div id="quantitySubscription">
-    ${subscription.quantity}
+    <span>Quantity: ${subscription.quantity}</span>
     </div>
 
-</div>`;
-    console.log(textHtml);
+</div>
+<hr>`;
     subscriptions.append(textHtml);
 }
