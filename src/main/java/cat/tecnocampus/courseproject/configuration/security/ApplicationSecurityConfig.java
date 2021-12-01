@@ -35,7 +35,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/", "index").permitAll()
                 .antMatchers("/*.html", "/*.css", "/*.min.css", "/*.js", "/*.bundle.min.js", "/*.min.js", "/*", "/h2-console/**").permitAll()
-                .antMatchers("/vendor/**", "/assets/**", "*/JS/**", "/JS/order.js", "/JS/products.js", "/JS/about.js", "/login-form-17/**").permitAll()
+                .antMatchers("/vendor/**", "/assets/**", "*/JS/**", "/JS/order.js", "/JS/products.js", "/JS/about.js", "/login-form-17/**","/favicon.ico").permitAll()
                 //admin
                 .antMatchers("/api/customers/all", "/api/subscriptions", "api/orders/*", "api/orders/all", "api/customers/orders/*").hasRole("ADMIN")
                 .antMatchers(HttpMethod.POST, "api/orders/admin/update/**").hasRole("ADMIN")
