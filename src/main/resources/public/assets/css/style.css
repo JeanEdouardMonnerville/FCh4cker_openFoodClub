@@ -54,8 +54,12 @@ input[type="number"]{
     width:44%;
     margin-bottom: 10px;
  }
-#subscriptionContainer{
+ #subscriptionContainer{
+    padding: 0px 70px ;
     display: flex;
+}
+#subscriptionContainer div{
+    margin: 0px 15px;
 }
 
  .NoOrderAvailableAdmin{
@@ -74,4 +78,8 @@ input[type="number"]{
 }
 #divMySubscriptions{
 margin: auto;
+}
+.subscription_product_image{
+    width: 150px;
+    height: 150px;
 }

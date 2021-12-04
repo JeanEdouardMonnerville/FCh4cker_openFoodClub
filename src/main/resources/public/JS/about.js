@@ -51,15 +51,13 @@ function insertSubscription(subscription) {
       ${subscription.sub_date}
     </div>
     <div id = "imageSubscription">
-        <img class="productImages" src="data:image/png;base64,${subscription.product.image}" 
+        <img class="subscription_product_image" src="data:image/png;base64,${subscription.product.image}" 
       onerror="if (this.src != 'error.jpg') this.src = 'https://i2.wp.com/germandebonis.com/wp-content/uploads/2016/09/cesta-llena-de-verduras_1112-316.jpg?w=895';">    
     </div>
     <div id="nameSubscription">
-       <span>${subscription.product.name}</span> 
-    </div>
-    
-    <div id="quantitySubscription">
-    <span>Quantity: ${subscription.quantity}</span>
+       <div>${subscription.product.name}</div> 
+
+    <div>Quantity: ${subscription.quantity}</div>
     </div>
 
 </div>
